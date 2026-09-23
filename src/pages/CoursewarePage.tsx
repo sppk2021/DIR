@@ -170,15 +170,32 @@ export const CoursewarePage: React.FC<CoursewarePageProps> = ({
 
       {/* Curricula Cards Showcase */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          key={selectedCategory + searchQuery}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.08, delayChildren: 0.05 }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {filteredItems.map((curr) => {
             const isAdded = addedIds.has(curr.id);
             const isJolly = curr.publisher.includes('Jolly');
             const isNatGeo = curr.publisher.includes('National Geographic');
 
             return (
-              <div
+              <motion.div
                 key={curr.id}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
+                }}
                 className="bg-white rounded-3xl border border-slate-200 hover:border-blue-300 hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group"
               >
                 <div className="p-6 space-y-4">
@@ -270,10 +287,10 @@ export const CoursewarePage: React.FC<CoursewarePageProps> = ({
                     )}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {filteredItems.length === 0 && (
           <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 p-8">

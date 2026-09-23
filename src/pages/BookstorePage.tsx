@@ -152,13 +152,30 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
 
       {/* Book Catalog Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          key={selectedCategory + searchQuery}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.07, delayChildren: 0.05 }
+            }
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {filteredBooks.map((book) => {
             const isAdded = addedIds.has(book.id);
 
             return (
-              <div
+              <motion.div
                 key={book.id}
+                variants={{
+                  hidden: { opacity: 0, y: 22 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.25, 0.1, 0.25, 1] } }
+                }}
                 className="bg-white rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all flex flex-col justify-between overflow-hidden group"
               >
                 <div>
@@ -203,7 +220,7 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
                 <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-2">
                   <button
                     onClick={() => setActiveBook(book)}
-                    className="text-xs font-semibold text-slate-600 hover:text-slate-900"
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer"
                   >
                     Quick View
                   </button>
@@ -229,10 +246,10 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
                     )}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       {/* Slide 18 Retail Distribution Network */}

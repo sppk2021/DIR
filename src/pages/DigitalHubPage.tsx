@@ -169,13 +169,30 @@ export const DigitalHubPage: React.FC<DigitalHubPageProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          key={selectedFilter}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.08, delayChildren: 0.05 }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {filteredClasses.map((cls) => {
             const isAdded = addedIds.has(cls.id);
 
             return (
-              <div
+              <motion.div
                 key={cls.id}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
+                }}
                 className="bg-white rounded-2xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all flex flex-col justify-between overflow-hidden group"
               >
                 <div className="p-6 space-y-4">
@@ -229,7 +246,7 @@ export const DigitalHubPage: React.FC<DigitalHubPageProps> = ({
                   </span>
                   <button
                     onClick={() => handleEnrollClass(cls)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isAdded
                         ? 'bg-emerald-600 text-white'
                         : 'bg-rose-600 text-white hover:bg-rose-700 shadow-xs'
@@ -248,10 +265,10 @@ export const DigitalHubPage: React.FC<DigitalHubPageProps> = ({
                     )}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       {/* 3-Stage Progression Roadmap */}

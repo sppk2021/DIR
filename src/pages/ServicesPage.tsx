@@ -138,14 +138,30 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </p>
           </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1, delayChildren: 0.05 }
+            }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
+        >
           {SERVICES_DATA.map((service) => {
             const isSelected = selectedServiceId === service.id;
             return (
-              <button
+              <motion.button
                 key={service.id}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
+                }}
                 onClick={() => handleSelectService(service.id)}
-                className={`p-6 rounded-2xl border-2 text-left transition-all flex flex-col justify-between group ${
+                className={`p-6 rounded-2xl border-2 text-left transition-all flex flex-col justify-between group cursor-pointer ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/40 shadow-md ring-2 ring-blue-600/20'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs'
@@ -177,10 +193,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     }`}
                   />
                 </div>
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       {/* Service Deep-Dive: Value Proposition & Interactive Workflow Infographic */}
