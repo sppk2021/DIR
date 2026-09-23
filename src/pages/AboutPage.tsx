@@ -71,33 +71,23 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenQuoteMod
 
   return (
     <div className="space-y-16 sm:space-y-20 pb-16">
-      {/* Header Banner - Light Dark Corporate Navy with Parallax */}
-      <section className="bg-[#1E4592] text-white py-14 sm:py-20 border-b border-blue-900 relative overflow-hidden">
-        {/* Parallax Background Glow Element */}
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-20 -top-20 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-10 bottom-0 w-72 h-72 bg-orange-400/10 rounded-full blur-2xl pointer-events-none"
-        />
+      {/* Header Banner - Clean Strategy First Style Academic Header */}
+      <section className="bg-slate-50 border-b border-slate-200 py-12 sm:py-16 text-slate-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             style={{ y: heroContentY, opacity: heroOpacity }}
             className="max-w-3xl space-y-3"
           >
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-200">
-              <Building2 className="w-3.5 h-3.5 text-orange-400" />
-              <span className="font-bold uppercase tracking-wider text-orange-400">Corporate Heritage</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <span className="font-bold uppercase tracking-wider text-[#1E4592]">Corporate Heritage</span>
               <span aria-hidden="true">·</span>
               <span>Leadership & Institutional Governance</span>
             </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight">
+            <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight leading-tight">
               Pioneering 21st-Century Education Across Myanmar
             </h1>
-            <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
-              Established in 2018 under the 21-year legacy of Myint Thuka Nadi Co., Ltd, DIR is dedicated to closing Myanmar&apos;s educational gap with world-class curricula, hands-on STEM robotics, and inspiring children&apos;s literature.
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Established in 2018 under the 21-year legacy of Myint Thuka Nadi Co., Ltd (Est. 2005), Digital Information Resources Co., Ltd (DIR) is dedicated to closing Myanmar&apos;s educational gap with world-class curricula, hands-on STEM robotics, and inspiring children&apos;s literature.
             </p>
           </motion.div>
         </div>
@@ -472,76 +462,76 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenQuoteMod
         </div>
       )}
 
-      {/* Strategic Mission & Institutional Commitments - Light Dark Corporate Navy */}
+      {/* Strategic Mission & Institutional Commitments - Clean Strategy First Layout */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#1E3A5F] via-[#1B355A] to-[#162D4A] text-white rounded-3xl p-8 sm:p-12 space-y-8 border border-[#2B4B75] shadow-sm">
+        <div className="bg-slate-50 text-slate-900 rounded-2xl p-8 sm:p-12 space-y-8 border border-slate-200 shadow-xs">
           <div className="max-w-3xl space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-orange-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
               Institutional Guiding Principles
             </span>
-            <h2 className="font-display font-bold text-2xl sm:text-3xl text-white">
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-900">
               Empowering Client Institutions & Future Generations
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-6 rounded-2xl bg-white/10 border border-white/15 space-y-4">
+            <div className="p-6 rounded-xl bg-white border border-slate-200 space-y-4 shadow-2xs">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-blue-500/20 text-blue-300">
+                <div className="p-2.5 rounded-lg bg-blue-50 text-[#1E4592]">
                   <Target className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-lg text-white">
+                  <h3 className="font-display font-bold text-lg text-slate-900">
                     DIR B2B Institutional Mission
                   </h3>
-                  <span className="text-xs text-blue-200 font-semibold">Institutional Curriculum Pillar</span>
+                  <span className="text-xs text-[#1E4592] font-semibold">Institutional Curriculum Pillar</span>
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-blue-100 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 DIR&apos;s core mission is to empower client institutions by delivering reliable, vetted curricula, implementing robust teacher training, and providing the best result-proven curricula for Kids, Pre-Schools, Private Schools, and International Bodies.
               </p>
-              <ul className="space-y-2 text-xs text-blue-100/90 pt-2 border-t border-white/10">
+              <ul className="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Annual Teacher In-Service Training & Certification</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Free inspection sample copies for curriculum committees</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Complete classroom presentation software & audio-visual assets</span>
                 </li>
               </ul>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/10 border border-white/15 space-y-4">
+            <div className="p-6 rounded-xl bg-white border border-slate-200 space-y-4 shadow-2xs">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-orange-500/20 text-orange-300">
+                <div className="p-2.5 rounded-lg bg-orange-50 text-[#F15A24]">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-lg text-white">
+                  <h3 className="font-display font-bold text-lg text-slate-900">
                     Win Digital Learning Hub Mission
                   </h3>
-                  <span className="text-xs text-orange-200 font-semibold">STEM & Digital Academy Pillar</span>
+                  <span className="text-xs text-[#F15A24] font-semibold">STEM & Digital Academy Pillar</span>
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-blue-100 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 WDLH&apos;s core mission is to actively bridge the STEM skills gap, ensuring every student is equipped with the competitive advantage necessary for success in the rapidly evolving era, providing a direct pathway for advanced learning beyond the core curriculum.
               </p>
-              <ul className="space-y-2 text-xs text-blue-100/90 pt-2 border-t border-white/10">
+              <ul className="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Hands-on robotic assembly with real circuit micro-controllers</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Progression from visual blocks to text-based Python</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Accredited curriculum with official ISTE SEAL certification</span>
                 </li>
               </ul>

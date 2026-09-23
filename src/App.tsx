@@ -1,23 +1,43 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PageId, QuoteItem } from './types';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { SampleQuoteModal } from './components/SampleQuoteModal';
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { CoursewarePage } from './pages/CoursewarePage';
-import { BookstorePage } from './pages/BookstorePage';
-import { DigitalHubPage } from './pages/DigitalHubPage';
-import { InfographicsPage } from './pages/InfographicsPage';
-import { PartnersPage } from './pages/PartnersPage';
-import { ContactPage } from './pages/ContactPage';
+
+// Code-split page components with React.lazy to optimize initial bundle size & load times
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then((m) => ({ default: m.ServicesPage })));
+const CoursewarePage = lazy(() => import('./pages/CoursewarePage').then((m) => ({ default: m.CoursewarePage })));
+const BookstorePage = lazy(() => import('./pages/BookstorePage').then((m) => ({ default: m.BookstorePage })));
+const DigitalHubPage = lazy(() => import('./pages/DigitalHubPage').then((m) => ({ default: m.DigitalHubPage })));
+const InfographicsPage = lazy(() => import('./pages/InfographicsPage').then((m) => ({ default: m.InfographicsPage })));
+const PartnersPage = lazy(() => import('./pages/PartnersPage').then((m) => ({ default: m.PartnersPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+
+// Professional, lightweight fallback loader matching brand palette
+const PageLoadingFallback = () => (
+  <div className="min-h-[50vh] flex flex-col items-center justify-center py-20 px-4">
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-8 h-8 border-2 border-slate-200 border-t-[#1E4592] rounded-full animate-spin" />
+      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+        Loading...
+      </span>
+    </div>
+  </div>
+);
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [quoteItems, setQuoteItems] = useState<QuoteItem[]>([]);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
+  // Initialize and synchronize with window.location.hash
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as PageId;
@@ -67,6 +87,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans antialiased">
+      {/* Top Bar Navigation */}
       <Navbar
         currentPage={currentPage}
         onNavigate={handleNavigate}
@@ -74,52 +95,88 @@ export default function App() {
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
+      {/* Main Multi-Page Content with Suspense Code-Splitting */}
       <main className="flex-1">
-        {currentPage === 'home' && (
-          <HomePage
-            onNavigate={handleNavigate}
-            onAddToQuote={handleAddToQuote}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-          />
-        )}
-        {currentPage === 'about' && <AboutPage onNavigate={handleNavigate} />}
-        {currentPage === 'services' && <ServicesPage onNavigate={handleNavigate} />}
-        {currentPage === 'courseware' && (
-          <CoursewarePage
-            onNavigate={handleNavigate}
-            onAddToQuote={handleAddToQuote}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-          />
-        )}
-        {currentPage === 'bookstore' && (
-          <BookstorePage
-            onNavigate={handleNavigate}
-            onAddToQuote={handleAddToQuote}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-          />
-        )}
-        {currentPage === 'digital-hub' && (
-          <DigitalHubPage
-            onNavigate={handleNavigate}
-            onAddToQuote={handleAddToQuote}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-          />
-        )}
-        {currentPage === 'infographics' && <InfographicsPage onNavigate={handleNavigate} />}
-        {currentPage === 'partners' && <PartnersPage onNavigate={handleNavigate} />}
-        {currentPage === 'contact' && <ContactPage onNavigate={handleNavigate} />}
+        <Suspense fallback={<PageLoadingFallback />}>
+          {currentPage === 'home' && (
+            <HomePage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'about' && (
+            <AboutPage
+              onNavigate={handleNavigate}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'services' && (
+            <ServicesPage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'courseware' && (
+            <CoursewarePage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'bookstore' && (
+            <BookstorePage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'digital-hub' && (
+            <DigitalHubPage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'infographics' && (
+            <InfographicsPage
+              onNavigate={handleNavigate}
+              onAddToQuote={handleAddToQuote}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'partners' && (
+            <PartnersPage
+              onNavigate={handleNavigate}
+              onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+            />
+          )}
+
+          {currentPage === 'contact' && (
+            <ContactPage onNavigate={handleNavigate} />
+          )}
+        </Suspense>
       </main>
 
-      <Footer onNavigate={handleNavigate} />
-
+      {/* Global Inspection Copy / Quotation Basket Modal */}
       <SampleQuoteModal
         isOpen={isQuoteModalOpen}
         onClose={() => setIsQuoteModalOpen(false)}
         items={quoteItems}
         onRemoveItem={handleRemoveQuoteItem}
-        onClear={handleClearQuoteItems}
-        onNavigate={handleNavigate}
+        onClearItems={handleClearQuoteItems}
       />
+
+      {/* Global Comprehensive Footer */}
+      <Footer onNavigate={handleNavigate} />
     </div>
   );
 }

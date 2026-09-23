@@ -44,31 +44,22 @@ export const PartnersPage: React.FC<PartnersPageProps> = ({ onNavigate, onOpenQu
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
-      {/* Header Banner - Corporate Navy with Parallax */}
-      <section className="bg-[#1E4592] text-white py-14 sm:py-20 border-b border-blue-900 relative overflow-hidden">
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-24 -top-24 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-12 bottom-0 w-80 h-80 bg-orange-400/15 rounded-full blur-2xl pointer-events-none"
-        />
+      {/* Header Banner - Clean Strategy First Style Academic Header */}
+      <section className="bg-slate-50 border-b border-slate-200 py-12 sm:py-16 text-slate-900 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             style={{ y: heroContentY, opacity: heroOpacity }}
             className="max-w-3xl space-y-3"
           >
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-200">
-              <Handshake className="w-3.5 h-3.5 text-orange-400" />
-              <span className="font-bold uppercase tracking-wider text-orange-400">Institutional Alliances</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <span className="font-bold uppercase tracking-wider text-[#1E4592]">Institutional Alliances</span>
               <span aria-hidden="true">·</span>
               <span>National Academic & Retail Network</span>
             </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-tight">
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 tracking-tight leading-tight">
               Our Trusted School & Retail Partners Across Myanmar
             </h1>
-            <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               From leading international schools and private academies in Yangon to flagship bookstores and children&apos;s hubs in Mandalay, DIR is proud to supply trusted educational resources nationwide.
             </p>
           </motion.div>

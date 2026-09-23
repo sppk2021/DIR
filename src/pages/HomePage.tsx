@@ -103,31 +103,21 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       <SectionDivider type="wave" />
 
-      {/* 2. Hero Section: Clean, Authoritative & Useful with Multi-Layer Parallax */}
-      <div className="relative overflow-hidden">
-        {/* Parallax background ambient glow elements */}
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-24 -top-24 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-20 bottom-0 w-96 h-96 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"
-        />
-
-        <section className="bg-gradient-to-b from-slate-50 via-blue-50/20 to-slate-50 border-y border-slate-200 py-12 sm:py-20 relative z-10">
+      {/* 2. Hero Section: Clean, Authoritative & Architectural */}
+      <div className="relative">
+        <section className="bg-slate-50 border-y border-slate-200 py-12 sm:py-18 relative z-10">
           <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               {/* Left Column: Mission, Value & Direct Search */}
               <motion.div
                 style={{ y: heroContentY }}
                 className="lg:col-span-7 space-y-6"
               >
                 {/* Unboxed Header Metadata */}
-                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500">
-                  <span className="text-[#1E4592] font-bold">DIR Education Group</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
+                  <span className="text-[#1E4592] font-bold">Digital Information Resources Co., Ltd</span>
                   <span aria-hidden="true">·</span>
-                  <span>Established 2018</span>
+                  <span>Est. 2018</span>
                   <span aria-hidden="true">·</span>
                   <span>Member of Myint Thuka Nadi Group (Est. 2005)</span>
                   <span aria-hidden="true">·</span>
@@ -139,7 +129,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </h1>
 
                 <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl">
-                  Digital Information Resources (DIR) provides world-standard curricula from Jolly Learning, National Geographic Learning, and Binary Logic, operates nationwide distribution through U Book Store, and runs hands-on robotics education at Win Digital Learning Hub.
+                  Digital Information Resources Co., Ltd (DIR) is Myanmar&apos;s authorized provider of world-standard curricula (Jolly Phonics, National Geographic Learning, Binary Logic), operator of U Book Store wholesale distribution, and founder of Win Digital Learning Hub.
                 </p>
 
                 {/* Instant Search Bar for High Everyday Utility */}
@@ -202,7 +192,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </button>
                 </div>
 
-                {/* Key Quantitative Proof (Tabular figures, clean unboxed presentation) */}
+                {/* Key Quantitative Proof */}
                 <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-6 max-w-lg">
                   <div>
                     <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">21+</div>
@@ -210,11 +200,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </div>
                   <div>
                     <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">50+</div>
-                    <div className="text-xs text-slate-500 mt-0.5">School & Retail Partners</div>
+                    <div className="text-xs text-slate-500 mt-0.5">Partner Schools & Stores</div>
                   </div>
                   <div>
                     <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">100+</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Teachers Trained / Year</div>
+                    <div className="text-xs text-slate-500 mt-0.5">Teachers Certified / Year</div>
                   </div>
                 </div>
               </motion.div>
@@ -636,12 +626,61 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 6. Partner Network: Institutional Logos & Verification */}
+      {/* 6. Official Corporate Profile & Fact Sheet */}
+      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
+                Official Corporate Registry & Data Sheet
+              </span>
+              <h3 className="font-display font-bold text-2xl text-slate-900 mt-1">
+                Digital Information Resources Co., Ltd (DIR)
+              </h3>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-semibold px-3 py-1 bg-blue-50 text-[#1E4592] border border-blue-200 rounded-lg">
+                Member of MTKN Group (Est. 2005)
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Corporate Identity</div>
+              <div className="text-sm font-bold text-slate-900">Digital Information Resources Co., Ltd</div>
+              <div className="text-xs text-slate-600">Established in 2018 · Yangon, Myanmar</div>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Headquarters Address</div>
+              <div className="text-xs font-semibold text-slate-900">No-408, Tower (B), Myaing Hay Wun Condo</div>
+              <div className="text-xs text-slate-600">8 Miles, Mayangone Township, Yangon</div>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Direct Contact Hotlines</div>
+              <div className="text-xs font-mono font-bold text-slate-900">+95 186 510 49</div>
+              <div className="text-xs font-mono text-slate-700">+95 9 797 007 881</div>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Official Channels</div>
+              <a href="mailto:cs@dir.com.mm" className="text-xs font-semibold text-[#1E4592] hover:underline block">
+                cs@dir.com.mm
+              </a>
+              <div className="text-xs text-slate-600">Mon – Fri: 9:00 AM – 5:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Partner Network: Institutional Logos & Verification */}
       <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
         <PartnerLogoCarousel onNavigate={onNavigate} />
       </section>
 
-      {/* 7. Testimonials Carousel */}
+      {/* 8. Testimonials Carousel */}
       <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
         <TestimonialCarousel
           title="What Schools, Teachers & Students Say"

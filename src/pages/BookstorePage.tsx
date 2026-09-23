@@ -68,50 +68,43 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
-      {/* Header Banner with Parallax */}
-      <section className="bg-linear-to-br from-[#0B1733] via-[#7C2D12] to-[#F15A24] text-white py-14 sm:py-20 border-b border-orange-500/40 relative overflow-hidden">
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-16 -top-16 w-96 h-96 bg-orange-400/25 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-16 bottom-0 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"
-        />
+      {/* Header Banner - Clean Strategy First Style Academic Header */}
+      <section className="bg-slate-50 border-b border-slate-200 py-12 sm:py-16 text-slate-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <motion.div
               style={{ y: heroContentY, opacity: heroOpacity }}
               className="lg:col-span-8 space-y-4"
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-400/40 text-orange-200 text-xs font-bold shadow-2xs">
-                <Store className="w-3.5 h-3.5 text-[#FB923C]" />
-                <span>U Book Store (UBS) · Distribution & Retail</span>
+              <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <span className="font-bold uppercase tracking-wider text-[#1E4592]">U Book Store (UBS)</span>
+                <span aria-hidden="true">·</span>
+                <span>Wholesale & Retail Distribution</span>
               </div>
-              <h1 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight">
+              <h1 className="font-display font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight leading-tight">
                 One-Stop Kids Books & Educational Activity Tools
               </h1>
-              <p className="text-orange-100 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 U Book Store (UBS) operates as the kids&apos; books and activities tools distributor across Myanmar, focusing on curated sales of educational materials, supplementary reading, and specialized books to both B2B and B2C segments.
               </p>
             </motion.div>
 
-            {/* Slide 16 Key Metrics with Parallax Depth */}
+            {/* Key Metrics in Clean White Cards */}
             <motion.div
               style={{ y: heroMetricsY, opacity: heroOpacity }}
               className="lg:col-span-4 grid grid-cols-3 gap-3"
             >
-              <div className="p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-center shadow-xs">
-                <div className="font-display font-black text-2xl text-[#FB923C] tabular-nums">50+</div>
-                <div className="text-[11px] text-white mt-1 font-semibold">Books & Kits</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200 text-center shadow-2xs">
+                <div className="font-display font-black text-2xl text-[#1E4592] tabular-nums">50+</div>
+                <div className="text-[11px] text-slate-600 mt-1 font-semibold">Books & Kits</div>
               </div>
-              <div className="p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-center shadow-xs">
-                <div className="font-display font-black text-2xl text-[#FB923C] tabular-nums">50+</div>
-                <div className="text-[11px] text-white mt-1 font-semibold">Retail Stores</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200 text-center shadow-2xs">
+                <div className="font-display font-black text-2xl text-[#1E4592] tabular-nums">50+</div>
+                <div className="text-[11px] text-slate-600 mt-1 font-semibold">Retail Stores</div>
               </div>
-              <div className="p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-center shadow-xs">
-                <div className="font-display font-black text-2xl text-[#FB923C] tabular-nums">3+</div>
-                <div className="text-[11px] text-white mt-1 font-semibold">Major Cities</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200 text-center shadow-2xs">
+                <div className="font-display font-black text-2xl text-[#F15A24] tabular-nums">3+</div>
+                <div className="text-[11px] text-slate-600 mt-1 font-semibold">Major Cities</div>
               </div>
             </motion.div>
           </div>

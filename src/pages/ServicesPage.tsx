@@ -86,32 +86,22 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
   return (
     <div className="space-y-16 sm:space-y-20 pb-16 overflow-hidden">
-      {/* Hero Banner - Corporate Navy with Parallax */}
-      <section className="bg-[#1E4592] text-white py-14 sm:py-20 border-b border-blue-900 relative overflow-hidden">
-        {/* Parallax Background Glow Elements */}
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-24 -top-24 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-12 bottom-0 w-80 h-80 bg-orange-400/10 rounded-full blur-2xl pointer-events-none"
-        />
+      {/* Hero Banner - Clean Strategy First Style Academic Header */}
+      <section className="bg-slate-50 border-b border-slate-200 py-12 sm:py-16 text-slate-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             style={{ y: heroContentY, opacity: heroOpacity }}
             className="max-w-3xl space-y-3"
           >
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-200">
-              <Layers className="w-3.5 h-3.5 text-orange-400" />
-              <span className="font-bold uppercase tracking-wider text-orange-400">Strategic Capabilities</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <span className="font-bold uppercase tracking-wider text-[#1E4592]">Strategic Capabilities</span>
               <span aria-hidden="true">·</span>
               <span>Comprehensive Educational Services</span>
             </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-tight">
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 tracking-tight leading-tight">
               Turnkey Educational & Distribution Services
             </h1>
-            <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               DIR provides end-to-end educational infrastructure across Myanmar: from international curriculum licensing and certified teacher masterclasses to nationwide retail bookstore supply and weekend robotics labs.
             </p>
           </motion.div>
@@ -351,24 +341,24 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         </div>
       </section>
 
-      {/* Modern Infographic 03: Interactive Scope & Package Estimator Tool - Light Dark Corporate Navy */}
+      {/* Modern Infographic 03: Interactive Scope & Package Estimator Tool - Clean Strategy First Layout */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#1E3A5F] via-[#1B355A] to-[#162D4A] text-white rounded-3xl p-8 sm:p-12 border border-[#2B4B75] shadow-sm space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+        <div className="bg-slate-50 text-slate-900 rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-xs space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-orange-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
                 Interactive Estimator
               </span>
-              <h3 className="font-display font-bold text-2xl sm:text-3xl text-white mt-1">
+              <h3 className="font-display font-bold text-2xl sm:text-3xl text-slate-900 mt-1">
                 Institutional Service Package Tailoring
               </h3>
-              <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-lg">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-lg">
                 Select your institutional classification to preview the recommended service setup, implementation timeline, and SLA commitments.
               </p>
             </div>
 
             {/* Profile Selector */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white/10 rounded-xl border border-white/15">
+            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl border border-slate-300/80">
               {[
                 { id: 'international-school', label: 'K-12 International School' },
                 { id: 'preschool', label: 'Preschool & Early Childhood' },
@@ -380,8 +370,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   onClick={() => setEstimatorClientType(role.id as any)}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                     estimatorClientType === role.id
-                      ? 'bg-white text-[#1E3A5F] font-bold shadow-xs'
-                      : 'text-blue-100 hover:text-white'
+                      ? 'bg-white text-[#1E4592] font-bold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   {role.label}
@@ -392,17 +382,17 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
           {/* Estimator Dynamic Spec Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-white/10 border border-white/15 space-y-3">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-blue-200 block font-bold">
+            <div className="p-6 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#1E4592] block font-bold">
                 Recommended Service Suite
               </span>
-              <h4 className="font-display font-bold text-lg text-white">
+              <h4 className="font-display font-bold text-lg text-slate-900">
                 {estimatorClientType === 'international-school' && 'Full K-12 English & Computing Continuum'}
                 {estimatorClientType === 'preschool' && 'Rainbow KG Series + Jolly Classroom Phonics'}
                 {estimatorClientType === 'bookstore' && 'U Book Store Wholesale & Consignment Supply'}
                 {estimatorClientType === 'stem-student' && 'WDLH Hands-On Weekend Robotics & Python'}
               </h4>
-              <p className="text-xs text-blue-100 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {estimatorClientType === 'international-school' &&
                   'Complete integration with National Geographic Look/New Close-up and Binary Logic Digital Kids/Teens with ISTE SEAL.'}
                 {estimatorClientType === 'preschool' &&
@@ -414,43 +404,43 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/10 border border-white/15 space-y-3">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-amber-300 block font-bold">
+            <div className="p-6 rounded-xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-amber-600 block font-bold">
                 Implementation SLA & Logistics
               </span>
-              <div className="space-y-2 text-xs text-blue-100">
-                <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+              <div className="space-y-2 text-xs text-slate-700">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
                   <span>Inspection Copy Dispatch:</span>
-                  <strong className="text-white">24 – 48 Hours</strong>
+                  <strong className="text-slate-900 font-mono">24 – 48 Hours</strong>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
                   <span>Teacher Training Workshop:</span>
-                  <strong className="text-white">Full In-Service Day</strong>
+                  <strong className="text-slate-900">Full In-Service Day</strong>
                 </div>
-                <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
                   <span>Stock Buffer:</span>
-                  <strong className="text-white">Yangon Warehouse Ready</strong>
+                  <strong className="text-slate-900">Yangon Warehouse Ready</strong>
                 </div>
                 <div className="flex items-center justify-between pt-0.5">
                   <span>Regional Delivery Corridors:</span>
-                  <strong className="text-white">MTKN Express Network</strong>
+                  <strong className="text-slate-900">MTKN Express Network</strong>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/10 border border-white/15 space-y-4 flex flex-col justify-between">
+            <div className="p-6 rounded-xl bg-white border border-slate-200 space-y-4 flex flex-col justify-between shadow-2xs">
               <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-300 block font-bold">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700 block font-bold">
                   Institutional Value Benefit
                 </span>
-                <p className="text-xs text-blue-100 leading-relaxed mt-2">
+                <p className="text-xs text-slate-600 leading-relaxed mt-2">
                   Zero customs hold-ups, certified teacher credentials, and direct local technical support from Mayangone Headquarters.
                 </p>
               </div>
 
               <button
                 onClick={onOpenQuoteModal}
-                className="w-full py-3 px-4 bg-white hover:bg-blue-50 text-[#1E3A5F] rounded-xl text-xs font-bold shadow-xs text-center transition-all cursor-pointer"
+                className="w-full py-3 px-4 bg-[#1E4592] hover:bg-[#132E66] text-white rounded-xl text-xs font-bold shadow-xs text-center transition-all cursor-pointer"
               >
                 Inquire for This Package
               </button>
@@ -459,82 +449,145 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         </div>
       </section>
 
-      {/* Modern Infographic 04: DIR Ecosystem vs Traditional Fragmented Sourcing */}
+      {/* Institutional Service Standards & Delivery Commitments */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-            Comparative Value Analysis
-          </span>
-          <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-900">
-            Why Myanmar Educators Choose DIR Services
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            A comprehensive institutional partnership vs fragmented book trading.
-          </p>
-        </div>
-
-        <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
-          <div className="grid grid-cols-12 bg-[#1E4592] text-white p-4 sm:p-5 text-xs font-semibold">
-            <div className="col-span-5 sm:col-span-4">Service Feature & Dimension</div>
-            <div className="col-span-3 sm:col-span-4 text-slate-400">Traditional Book Importers</div>
-            <div className="col-span-4 sm:col-span-4 text-blue-400 font-bold">DIR Educational Ecosystem</div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-slate-200">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+              <span className="font-bold uppercase tracking-wider text-[#1E4592]">
+                Institutional Service Standards
+              </span>
+              <span aria-hidden="true">·</span>
+              <span>DIR Operating Specifications</span>
+            </div>
+            <h2 className="font-display font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+              Educational Partnership & SLA Commitments
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
+              End-to-end institutional capabilities covering curriculum licensing, teacher professional development, classroom technology, and nationwide buffer logistics.
+            </p>
           </div>
 
-          <div className="divide-y divide-slate-100 text-xs text-slate-700">
-            <div className="grid grid-cols-12 p-4 sm:p-5 items-center">
-              <div className="col-span-5 sm:col-span-4 font-semibold text-slate-900">
-                Teacher Training & In-Service Workshops
-              </div>
-              <div className="col-span-3 sm:col-span-4 text-slate-500">None / Self-study only</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Certified On-site & Digital Masterclasses</span>
-              </div>
-            </div>
+          <div className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 shrink-0">
+            5 Core Institutional Standards
+          </div>
+        </div>
 
-            <div className="grid grid-cols-12 p-4 sm:p-5 items-center bg-slate-50/50">
-              <div className="col-span-5 sm:col-span-4 font-semibold text-slate-900">
-                Interactive Whiteboard Software (CPT)
-              </div>
-              <div className="col-span-3 sm:col-span-4 text-slate-500">Print books only</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Official Jolly Classroom & NatGeo CPT Software</span>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Standard 1 */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#1E4592] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                SLA 01 · Pedagogy
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Certified In-Service</span>
+              </span>
             </div>
+            <h3 className="font-display font-bold text-base text-slate-900">
+              Teacher Training & Masterclasses
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Certified on-site and digital masterclasses conducted by accredited Jolly Phonics and National Geographic trainers with lesson planning templates and classroom observation guides.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-12 p-4 sm:p-5 items-center">
-              <div className="col-span-5 sm:col-span-4 font-semibold text-slate-900">
-                Local Stock Buffer in Yangon
-              </div>
-              <div className="col-span-3 sm:col-span-4 text-slate-500">6–12 weeks wait from overseas</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Immediate Yangon Stock & Re-orders</span>
-              </div>
+          {/* Standard 2 */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#1E4592] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                SLA 02 · Technology
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>CPT & Offline Mode</span>
+              </span>
             </div>
+            <h3 className="font-display font-bold text-base text-slate-900">
+              Interactive Whiteboard Software
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Official Jolly Classroom and National Geographic Classroom Presentation Tool (CPT) software deployments for touchscreen projection with complete offline classroom capability.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-12 p-4 sm:p-5 items-center bg-slate-50/50">
-              <div className="col-span-5 sm:col-span-4 font-semibold text-slate-900">
-                Global Accreditation Standards
-              </div>
-              <div className="col-span-3 sm:col-span-4 text-slate-500">Unvetted regional reprints</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>ISTE SEAL Certified & CEFR Benchmarked</span>
-              </div>
+          {/* Standard 3 */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#1E4592] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                SLA 03 · Logistics
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Yangon Central Hub</span>
+              </span>
             </div>
+            <h3 className="font-display font-bold text-base text-slate-900">
+              Guaranteed Buffer Stock Reserves
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Maintained inventory buffer at Mayangone Warehouse eliminating 6–12 week international freight waiting times, with fast-tracked dispatch via MTKN Express.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-12 p-4 sm:p-5 items-center">
-              <div className="col-span-5 sm:col-span-4 font-semibold text-slate-900">
-                Sample Copies for School Boards
-              </div>
-              <div className="col-span-3 sm:col-span-4 text-slate-500">Must purchase full retail</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Free Evaluation & Inspection Copy Sets</span>
-              </div>
+          {/* Standard 4 */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#1E4592] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                SLA 04 · Standards
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>CEFR & ISTE SEAL</span>
+              </span>
             </div>
+            <h3 className="font-display font-bold text-base text-slate-900">
+              International Accreditation
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              English curricula mapped against the Common European Framework of Reference (CEFR Pre-A1 to C1) and ICT computing series verified with the international ISTE SEAL.
+            </p>
+          </div>
+
+          {/* Standard 5 */}
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#1E4592] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                SLA 05 · Evaluation
+              </span>
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Complimentary Sets</span>
+              </span>
+            </div>
+            <h3 className="font-display font-bold text-base text-slate-900">
+              Inspection Copy Protocol
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Complimentary physical inspection copy sets, scope-and-sequence tables, and curriculum integration roadmaps provided directly to school academic committees and directors.
+            </p>
+          </div>
+
+          {/* Standard 6 / Support Callout */}
+          <div className="bg-slate-50 rounded-xl border border-slate-200 p-6 space-y-3 flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-600 block">
+                Direct Academic Support
+              </span>
+              <h3 className="font-display font-bold text-base text-slate-900 mt-1">
+                Mayangone Academic Office
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mt-1">
+                Direct consultation with our curriculum specialists for bespoke timetable structuring, book quantity estimates, and dealer wholesale margins.
+              </p>
+            </div>
+            <button
+              onClick={onOpenQuoteModal}
+              className="w-full py-2.5 px-4 bg-[#1E4592] hover:bg-[#132E66] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer text-center"
+            >
+              Request Institutional Consultation
+            </button>
           </div>
         </div>
       </section>

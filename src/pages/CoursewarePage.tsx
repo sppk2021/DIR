@@ -67,33 +67,24 @@ export const CoursewarePage: React.FC<CoursewarePageProps> = ({
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
-      {/* Header with Parallax */}
-      <section className="bg-[#1E4592] text-white py-14 sm:py-20 border-b border-blue-900 relative overflow-hidden">
-        {/* Parallax Background Glow Elements */}
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -right-24 -top-24 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"
-        />
-        <motion.div
-          style={{ y: heroBgY }}
-          className="absolute -left-12 bottom-0 w-80 h-80 bg-orange-400/10 rounded-full blur-2xl pointer-events-none"
-        />
+      {/* Header Banner - Clean Strategy First Style Academic Header */}
+      <section className="bg-slate-50 border-b border-slate-200 py-12 sm:py-16 text-slate-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             style={{ y: heroContentY, opacity: heroOpacity }}
             className="max-w-3xl space-y-3"
           >
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-200">
-              <span className="font-bold uppercase tracking-wider text-orange-400">
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <span className="font-bold uppercase tracking-wider text-[#1E4592]">
                 Institutional Courseware
               </span>
               <span aria-hidden="true">·</span>
               <span>B2B Curriculum Adoptions</span>
             </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-tight">
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 tracking-tight leading-tight">
               International Courseware for Pre-Schools, Private & K-12 Schools
             </h1>
-            <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               Empowering Myanmar educators with globally recognized curricula from Jolly Learning, National Geographic Learning, and Binary Logic. Complete with interactive whiteboard software (CPT), teacher training, and physical inspection copies.
             </p>
           </motion.div>
