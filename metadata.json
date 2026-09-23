@@ -1,0 +1,6 @@
+{
+  "name": "DIR - Digital Information Resources",
+  "description": "Digital Information Resources Co., Ltd (DIR) - Myanmar's leading educational courseware provider, U Book Store, and Win Digital Learning Hub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

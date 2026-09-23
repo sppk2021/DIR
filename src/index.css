@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', 'Open Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-opensans: 'Open Sans', sans-serif;
+  --font-lato: 'Lato', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-dir-blue: #1E4592;
+  --color-dir-blue-dark: #132E66;
+  --color-dir-blue-light: #2A5DB5;
+  --color-dir-blue-pale: #EFF4FC;
+  --color-dir-orange: #F15A24;
+  --color-dir-orange-dark: #D44512;
+  --color-dir-orange-light: #FF733E;
+  --color-dir-orange-pale: #FEF3EE;
+  --color-dir-navy: #0A1224;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 70s linear infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+.font-inter { font-family: 'Inter', sans-serif; }
+.font-roboto { font-family: 'Roboto', sans-serif; }
+.font-opensans { font-family: 'Open Sans', sans-serif; }
+.font-lato { font-family: 'Lato', sans-serif; }
+.font-playfair { font-family: 'Playfair Display', serif; }
+.font-display { font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif; }
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Skeleton Shimmer Keyframes */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 37%, #f1f5f9 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* 12px border-radius standard for modern cards, inputs, and interactive components */
+.rounded-card,
+.card-12 {
+  border-radius: 12px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+  border-radius: 12px;
+}
+
