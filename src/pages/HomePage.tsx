@@ -30,6 +30,7 @@ import heroClassroomImg from '../assets/images/myanmar_classroom_learning_179017
 import campusImg from '../assets/images/modern_school_campus_1790752281948.jpg';
 import libraryReadingImg from '../assets/images/library_teacher_students_1790752299661.jpg';
 import partnersGlobeImg from '../assets/images/partners_globe_books_1790752316364.jpg';
+import { PartnerCoverSlider } from '../components/PartnerCoverSlider';
 
 interface HomePageProps {
   onNavigate: (page: PageId) => void;
@@ -528,125 +529,83 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 6. OUR REACH & PARTNERS */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: Institutional Reach & Scale */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="space-y-1">
-              <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
-                Our Reach
-              </span>
-              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
-                Proven Scale. Trusted Excellence.
-              </h2>
+      {/* 6. OUR PARTNERS COVERFLOW SLIDER (CSS SLIDER MATCHING UPLOADED DESIGN) */}
+      <section className="bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 border-y border-slate-200/80 py-10 sm:py-16">
+        <PartnerCoverSlider
+          onNavigate={onNavigate}
+          onAddToQuote={onAddToQuote}
+          onOpenQuoteModal={onOpenQuoteModal}
+        />
+
+        {/* Institutional Scale & Credibility Bar */}
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 mt-8 pt-8 border-t border-slate-200/80">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#0284C7] flex items-center justify-center shrink-0">
+                <School className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-display font-black text-xl sm:text-2xl text-slate-900 tabular-nums">
+                  500+
+                </div>
+                <div className="text-xs text-slate-500 font-medium">
+                  Schools Supported
+                </div>
+              </div>
             </div>
 
-            {/* 4 Stats Grid */}
-            <div className="grid grid-cols-2 gap-6 pt-2">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0284C7] flex items-center justify-center shrink-0">
-                  <School className="w-5 h-5" />
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+              <div className="w-11 h-11 rounded-xl bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-display font-black text-xl sm:text-2xl text-slate-900 tabular-nums">
+                  50,000+
                 </div>
-                <div>
-                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
-                    500+
-                  </div>
-                  <div className="text-xs text-slate-500 font-medium mt-0.5">
-                    Schools Supported
-                  </div>
+                <div className="text-xs text-slate-500 font-medium">
+                  Students Reached
                 </div>
               </div>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0">
-                  <GraduationCap className="w-5 h-5" />
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+              <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0">
+                <UserCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-display font-black text-xl sm:text-2xl text-slate-900 tabular-nums">
+                  2,000+
                 </div>
-                <div>
-                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
-                    50,000+
-                  </div>
-                  <div className="text-xs text-slate-500 font-medium mt-0.5">
-                    Students Reached
-                  </div>
+                <div className="text-xs text-slate-500 font-medium">
+                  Teachers Trained
                 </div>
               </div>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0">
-                  <UserCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
-                    2,000+
-                  </div>
-                  <div className="text-xs text-slate-500 font-medium mt-0.5">
-                    Teachers Trained
-                  </div>
-                </div>
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+              <div className="w-11 h-11 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0">
+                <Award className="w-5 h-5" />
               </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0">
-                  <Award className="w-5 h-5" />
+              <div>
+                <div className="font-display font-black text-xl sm:text-2xl text-slate-900 tabular-nums">
+                  100+
                 </div>
-                <div>
-                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
-                    100+
-                  </div>
-                  <div className="text-xs text-slate-500 font-medium mt-0.5">
-                    Partner Organizations
-                  </div>
+                <div className="text-xs text-slate-500 font-medium">
+                  Partner Organizations
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: OUR PARTNERS */}
-          <div className="lg:col-span-7 flex flex-col md:flex-row items-center gap-6">
-            <div className="space-y-4 flex-1">
-              <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
-                Our Partners
-              </span>
-              <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
-                Global Collaboration <br />
-                for Local Excellence
-              </h3>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                We work with trusted international publishers, technology providers and education organizations to bring the best resources and opportunities to Myanmar&apos;s learners.
-              </p>
-              <div>
-                <button
-                  onClick={() => onNavigate('partners')}
-                  className="px-6 py-2.5 bg-[#1E4592] hover:bg-[#153472] text-white text-xs font-semibold rounded-full shadow-xs transition-all inline-flex items-center gap-2 cursor-pointer"
-                >
-                  <span>View Our Partners</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Globe & Books Photo with Script Annotation */}
-            <div className="relative w-full max-w-[280px] shrink-0">
-              <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200 aspect-square">
-                <img
-                  src={partnersGlobeImg}
-                  alt="Desktop globe, stack of academic books and graduation cap"
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-
-              {/* Script Annotation */}
-              <div className="absolute top-4 right-2 sm:right-4 select-none pointer-events-none text-right">
-                <span className="font-script text-2xl sm:text-3xl text-slate-800 font-bold tracking-wide leading-tight block rotate-3">
-                  Global <br />
-                  Partnerships. <br />
-                  Local <br />
-                  Excellence.
-                </span>
-              </div>
-            </div>
+          {/* Quick link to full partners page */}
+          <div className="text-center pt-8">
+            <button
+              onClick={() => onNavigate('partners')}
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#1E4592] hover:text-[#153472] transition-colors cursor-pointer group"
+            >
+              <span>Explore Complete School & Retail Partner Directory</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
       </section>
