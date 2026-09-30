@@ -23,7 +23,7 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('School Principal / Academic Director');
-  const [inquiryType, setInquiryType] = useState<'inspection-copy' | 'wholesale' | 'stem-batch'>('inspection-copy');
+  const [requestType, setRequestType] = useState<'inspection-copy' | 'wholesale' | 'stem-batch'>('inspection-copy');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -59,7 +59,7 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
           <div>
             <h3 className="font-display font-bold text-lg text-slate-900">
-              {submitted ? 'Inquiry Submitted' : 'Request Inspection Copy & Quotation'}
+              {submitted ? 'Request Submitted' : 'Request Consultation & Inspection Copies'}
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Digital Information Resources Co., Ltd (DIR) Institutional Desk
@@ -67,7 +67,7 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -86,13 +86,13 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
                   Thank You, {contactName}!
                 </h4>
                 <p className="text-sm text-slate-600 max-w-md mx-auto">
-                  Your inquiry has been logged with DIR’s Educational Consultation team. We will contact you at <strong className="text-slate-800">{email}</strong> or <strong className="text-slate-800">{phone}</strong> within 1 business day.
+                  Your request has been logged with DIR’s Educational Consultation team. We will contact you at <strong className="text-slate-800">{email}</strong> or <strong className="text-slate-800">{phone}</strong> within 1 business day.
                 </p>
               </div>
 
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-left text-xs space-y-2 max-w-md mx-auto">
                 <div className="flex justify-between text-slate-600">
-                  <span>Inquiry Ref:</span>
+                  <span>Request Reference:</span>
                   <span className="font-mono font-bold text-slate-900">DIR-{Math.floor(100000 + Math.random() * 900000)}</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
@@ -164,7 +164,7 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
                 )}
               </div>
 
-              {/* Inquiry Form */}
+              {/* Request Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 {errorMsg && (
                   <div className="p-3 text-xs bg-rose-50 border border-rose-200 text-rose-700 rounded-lg">
@@ -255,8 +255,8 @@ export const SampleQuoteModal: React.FC<SampleQuoteModalProps> = ({
                       Primary Objective
                     </label>
                     <select
-                      value={inquiryType}
-                      onChange={(e) => setInquiryType(e.target.value as any)}
+                      value={requestType}
+                      onChange={(e) => setRequestType(e.target.value as any)}
                       className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
                     >
                       <option value="inspection-copy">Physical Inspection Sample for School</option>

@@ -17,6 +17,8 @@ import {
 import classroomImg from '../assets/images/myanmar_classroom_learning_1790172148897.jpg';
 import roboticsImg from '../assets/images/stem_robotics_academy_1790172162021.jpg';
 import bookstoreImg from '../assets/images/kids_bookstore_display_1790172174602.jpg';
+import natgeoImg from '../assets/images/natgeo_curriculum_classroom_1790751948232.jpg';
+import workshopImg from '../assets/images/teacher_training_workshop_1790751960628.jpg';
 
 interface HomeImageCarouselProps {
   onNavigate: (page: PageId) => void;
@@ -76,8 +78,7 @@ export const HomeImageCarousel: React.FC<HomeImageCarouselProps> = ({
         'Inspiring students to see the world through National Geographic Look and New Close-up series, combining breathtaking real-world exploration photography with CEFR mastery.',
       targetPage: 'courseware',
       ctaText: 'View NatGeo Curricula',
-      imageUrl:
-        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: natgeoImg,
       badgeIcon: <Layers className="w-4 h-4 text-emerald-400" />,
       highlights: ['CEFR Benchmarked (Pre-A1 to C1)', 'Global Real-World Context', 'Interactive Whiteboard Software']
     },
@@ -103,8 +104,7 @@ export const HomeImageCarousel: React.FC<HomeImageCarouselProps> = ({
         'Over 100 educators trained annually across Myanmar by DIR’s academic trainers in phonics articulation, classroom pacing, and interactive whiteboard digital pedagogy.',
       targetPage: 'services',
       ctaText: 'Review Teacher Training',
-      imageUrl:
-        'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80',
+      imageUrl: workshopImg,
       badgeIcon: <GraduationCap className="w-4 h-4 text-purple-400" />,
       highlights: ['Annual In-Service Masterclasses', 'Lesson Pacing & Worksheets', 'Teacher Certifications']
     }

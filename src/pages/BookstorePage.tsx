@@ -229,7 +229,7 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
                     {isAdded ? (
                       <>
                         <Check className="w-3.5 h-3.5" />
-                        <span>In Inquiry</span>
+                        <span>Selected</span>
                       </>
                     ) : (
                       <>
@@ -361,9 +361,9 @@ export const BookstorePage: React.FC<BookstorePageProps> = ({
                   setActiveBook(null);
                   onOpenQuoteModal();
                 }}
-                className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold shadow-xs"
+                className="px-5 py-2 bg-[#F15A24] hover:bg-[#D44512] text-white rounded-lg text-xs font-semibold shadow-xs cursor-pointer"
               >
-                Add to Wholesale / Retail Inquiry
+                Request Wholesale / Bulk Samples
               </button>
             </div>
           </div>

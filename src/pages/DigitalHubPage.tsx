@@ -247,12 +247,12 @@ export const DigitalHubPage: React.FC<DigitalHubPageProps> = ({
                     {isAdded ? (
                       <>
                         <Check className="w-3.5 h-3.5" />
-                        <span>Registered</span>
+                        <span>Class Selected</span>
                       </>
                     ) : (
                       <>
                         <Plus className="w-3.5 h-3.5" />
-                        <span>Enroll / Trial</span>
+                        <span>Book Trial</span>
                       </>
                     )}
                   </button>

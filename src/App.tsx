@@ -41,14 +41,23 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '') as PageId;
+      if (hash === 'impact') {
+        setCurrentPage('partners');
+        return;
+      }
+      if (hash === 'resources') {
+        setCurrentPage('courseware');
+        return;
+      }
       const validPages: PageId[] = [
         'home',
         'about',
+        'solutions',
         'services',
+        'business-units',
         'courseware',
         'bookstore',
         'digital-hub',
-        'infographics',
         'partners',
         'contact'
       ];
@@ -113,7 +122,7 @@ export default function App() {
             />
           )}
 
-          {currentPage === 'services' && (
+          {(currentPage === 'services' || currentPage === 'solutions') && (
             <ServicesPage
               onNavigate={handleNavigate}
               onAddToQuote={handleAddToQuote}
@@ -121,7 +130,7 @@ export default function App() {
             />
           )}
 
-          {currentPage === 'courseware' && (
+          {(currentPage === 'courseware' || currentPage === 'resources' || currentPage === 'business-units') && (
             <CoursewarePage
               onNavigate={handleNavigate}
               onAddToQuote={handleAddToQuote}
@@ -145,7 +154,7 @@ export default function App() {
             />
           )}
 
-          {currentPage === 'infographics' && (
+          {(currentPage === 'infographics' || currentPage === 'impact') && (
             <InfographicsPage
               onNavigate={handleNavigate}
               onAddToQuote={handleAddToQuote}

@@ -4,16 +4,21 @@ import {
   Menu,
   X,
   ChevronDown,
-  ShoppingBag,
+  Search,
   BookOpen,
-  Store,
+  Laptop,
+  GraduationCap,
+  Library,
+  Landmark,
+  Palette,
   Bot,
-  Layers,
-  ArrowRight,
-  Phone,
-  MapPin,
+  Store,
+  Building2,
   Sparkles,
-  ExternalLink
+  ArrowRight,
+  PhoneCall,
+  Mail,
+  CheckCircle2
 } from 'lucide-react';
 import { DIRLogo } from './DIRLogo';
 
@@ -31,21 +36,23 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenQuoteModal
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [programmesDropdownOpen, setProgrammesDropdownOpen] = useState(false);
-  const [mobileProgrammesExpanded, setMobileProgrammesExpanded] = useState(true);
+  const [solutionsDropdownOpen, setSolutionsDropdownOpen] = useState(false);
+  const [businessUnitsDropdownOpen, setBusinessUnitsDropdownOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll position to shrink navbar & apply blur
+  const solutionsRef = useRef<HTMLDivElement>(null);
+  const unitsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu drawer is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -57,22 +64,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
   }, [mobileMenuOpen]);
 
-  // Close drawer on Escape key
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (solutionsRef.current && !solutionsRef.current.contains(e.target as Node)) {
+        setSolutionsDropdownOpen(false);
       }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
-  // Close dropdown when clicking outside (desktop)
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setProgrammesDropdownOpen(false);
+      if (unitsRef.current && !unitsRef.current.contains(e.target as Node)) {
+        setBusinessUnitsDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -82,70 +80,143 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleNavClick = (page: PageId) => {
     onNavigate(page);
     setMobileMenuOpen(false);
-    setProgrammesDropdownOpen(false);
+    setSolutionsDropdownOpen(false);
+    setBusinessUnitsDropdownOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isProgrammesActive =
-    currentPage === 'courseware' ||
-    currentPage === 'bookstore' ||
-    currentPage === 'digital-hub' ||
-    currentPage === 'services';
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchInput.trim()) return;
+    const q = searchInput.toLowerCase();
+    if (q.includes('robot') || q.includes('stem') || q.includes('code') || q.includes('hub')) {
+      handleNavClick('digital-hub');
+    } else if (q.includes('book') || q.includes('store') || q.includes('comic') || q.includes('toy')) {
+      handleNavClick('bookstore');
+    } else if (q.includes('service') || q.includes('training') || q.includes('library')) {
+      handleNavClick('services');
+    } else if (q.includes('partner') || q.includes('school')) {
+      handleNavClick('partners');
+    } else if (q.includes('contact') || q.includes('reach') || q.includes('email') || q.includes('phone')) {
+      handleNavClick('contact');
+    } else {
+      handleNavClick('courseware');
+    }
+    setSearchOpen(false);
+    setSearchInput('');
+  };
 
-  const programmeOptions = [
+  // 6 Solutions matching the uploaded design
+  const solutionsList = [
     {
-      id: 'courseware' as PageId,
-      title: 'Courseware Solutions (B2B)',
-      description: 'Jolly Phonics, NatGeo & Binary Logic for schools',
-      icon: <BookOpen className="w-4 h-4 text-[#1E4592]" />
+      title: 'Curriculum & Learning',
+      desc: 'ICT, Coding, Robotics, STEM, Languages',
+      icon: <BookOpen className="w-4 h-4 text-[#1E4592]" />,
+      page: 'courseware' as PageId
     },
     {
-      id: 'bookstore' as PageId,
-      title: 'U Book Store',
-      description: 'Kids books, graphic novels & activity tools',
-      icon: <Store className="w-4 h-4 text-[#F15A24]" />
+      title: 'Digital Learning & Technology',
+      desc: 'LMS, Online Learning, Digital Resources',
+      icon: <Laptop className="w-4 h-4 text-[#059669]" />,
+      page: 'digital-hub' as PageId
     },
     {
-      id: 'digital-hub' as PageId,
-      title: 'Win Digital Learning Hub',
-      description: 'Weekend hands-on robotics, coding & STEM labs',
-      icon: <Bot className="w-4 h-4 text-emerald-600" />
+      title: 'Teacher Development',
+      desc: 'Training, TOT, Professional Growth',
+      icon: <GraduationCap className="w-4 h-4 text-[#7C3AED]" />,
+      page: 'services' as PageId
     },
     {
-      id: 'services' as PageId,
-      title: 'Services Overview',
-      description: 'Teacher training masterclasses & institutional audits',
-      icon: <Layers className="w-4 h-4 text-indigo-600" />
+      title: 'Educational Resources',
+      desc: 'Books, Teaching Materials, Publishing',
+      icon: <Library className="w-4 h-4 text-[#D97706]" />,
+      page: 'bookstore' as PageId
+    },
+    {
+      title: 'Library Solutions',
+      desc: 'Library Management, Equipment, Setup',
+      icon: <Landmark className="w-4 h-4 text-[#0891B2]" />,
+      page: 'services' as PageId
+    },
+    {
+      title: 'Creative & Digital Services',
+      desc: 'Content, Design, Marketing Support',
+      icon: <Palette className="w-4 h-4 text-[#E11D48]" />,
+      page: 'services' as PageId
+    }
+  ];
+
+  // 7 Business Units matching the uploaded design
+  const businessUnitsList = [
+    {
+      title: 'DIR Courseware',
+      desc: 'Master B2B school solutions & global curricula',
+      icon: <BookOpen className="w-4 h-4 text-[#1E4592]" />,
+      page: 'courseware' as PageId
+    },
+    {
+      title: 'Win Digital Learning Hub (WDLH)',
+      desc: 'Hands-on robotics, coding & STEM academy',
+      icon: <Bot className="w-4 h-4 text-[#059669]" />,
+      page: 'digital-hub' as PageId
+    },
+    {
+      title: 'U Book Store (UBS)',
+      desc: 'Wholesale & retail children’s books & learning tools',
+      icon: <Store className="w-4 h-4 text-[#F15A24]" />,
+      page: 'bookstore' as PageId
+    },
+    {
+      title: 'U Book Publishing House',
+      desc: 'Curriculum publishing & local learning editions',
+      icon: <Building2 className="w-4 h-4 text-[#7C3AED]" />,
+      page: 'courseware' as PageId
+    },
+    {
+      title: 'Win Creative Agency',
+      desc: 'Educational brand design, multimedia & learning content',
+      icon: <Sparkles className="w-4 h-4 text-[#E11D48]" />,
+      page: 'services' as PageId
+    },
+    {
+      title: 'U Library Solution',
+      desc: 'Modern cataloging, digital repository & school setups',
+      icon: <Landmark className="w-4 h-4 text-[#0891B2]" />,
+      page: 'services' as PageId
+    },
+    {
+      title: 'U Educational Consultancy',
+      desc: 'Curriculum accreditation & institutional audits',
+      icon: <GraduationCap className="w-4 h-4 text-[#D97706]" />,
+      page: 'services' as PageId
     }
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 border-b ${
-          scrolled
-            ? 'bg-white/95 backdrop-blur-xl h-14 shadow-xs border-slate-200 py-0'
-            : 'bg-white/98 backdrop-blur-md h-18 border-slate-200 py-1'
+        className={`sticky top-0 z-40 transition-all duration-200 border-b bg-white ${
+          scrolled ? 'shadow-xs border-slate-200/90 py-2.5' : 'border-slate-200 py-3.5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex items-center justify-between h-full">
-            {/* Official DIR Brand Logo */}
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="flex items-center justify-between">
+            {/* 1. BRAND LOGO */}
             <button
               onClick={() => handleNavClick('home')}
-              className="focus:outline-none group text-left cursor-pointer"
+              className="focus:outline-none text-left cursor-pointer select-none"
               aria-label="DIR Home"
             >
-              <DIRLogo size={scrolled ? 'sm' : 'md'} showText={true} />
+              <DIRLogo size="sm" showText={true} />
             </button>
 
-            {/* Clean Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-7 xl:gap-8">
+            {/* 2. DESKTOP NAVIGATION LINKS (No Impact, No Resources) */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
               <button
                 onClick={() => handleNavClick('home')}
                 className={`text-sm font-semibold transition-colors py-1 cursor-pointer ${
                   currentPage === 'home'
-                    ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
+                    ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
                     : 'text-slate-700 hover:text-[#1E4592]'
                 }`}
               >
@@ -156,63 +227,105 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleNavClick('about')}
                 className={`text-sm font-semibold transition-colors py-1 cursor-pointer ${
                   currentPage === 'about'
-                    ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
+                    ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
                     : 'text-slate-700 hover:text-[#1E4592]'
                 }`}
               >
-                About
+                About Us
               </button>
 
-              {/* Programmes Dropdown */}
+              {/* Solutions Dropdown */}
               <div
                 className="relative"
-                ref={dropdownRef}
-                onMouseEnter={() => setProgrammesDropdownOpen(true)}
-                onMouseLeave={() => setProgrammesDropdownOpen(false)}
+                ref={solutionsRef}
+                onMouseEnter={() => setSolutionsDropdownOpen(true)}
+                onMouseLeave={() => setSolutionsDropdownOpen(false)}
               >
                 <button
-                  onClick={() => setProgrammesDropdownOpen(!programmesDropdownOpen)}
+                  onClick={() => setSolutionsDropdownOpen(!solutionsDropdownOpen)}
                   className={`text-sm font-semibold transition-colors py-1 flex items-center gap-1 cursor-pointer ${
-                    isProgrammesActive
-                      ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
+                    currentPage === 'services' || currentPage === 'solutions'
+                      ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
                       : 'text-slate-700 hover:text-[#1E4592]'
                   }`}
                 >
-                  <span>Programmes</span>
+                  <span>Solutions</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      programmesDropdownOpen ? 'rotate-180 text-[#1E4592]' : 'text-slate-500'
+                    className={`w-3.5 h-3.5 transition-transform duration-150 ${
+                      solutionsDropdownOpen ? 'rotate-180 text-[#1E4592]' : 'text-slate-400'
                     }`}
                   />
                 </button>
 
-                {programmesDropdownOpen && (
-                  <div className="absolute left-0 mt-1 w-84 bg-white rounded-2xl shadow-xl border border-slate-200 p-2.5 z-50 animate-in fade-in-50 duration-150">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#1E4592] px-3 py-1.5 border-b border-slate-100 flex items-center justify-between">
-                      <span>DIR Educational Units</span>
-                      <span className="w-2 h-2 rounded-full bg-[#F15A24]" />
+                {solutionsDropdownOpen && (
+                  <div className="absolute left-0 mt-1 w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 animate-in fade-in-50 duration-150">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#1E4592] px-3 py-1.5 border-b border-slate-100">
+                      Our Integrated Solutions
                     </div>
                     <div className="space-y-1 pt-1.5">
-                      {programmeOptions.map((prog) => (
+                      {solutionsList.map((item, idx) => (
                         <button
-                          key={prog.id}
-                          onClick={() => handleNavClick(prog.id)}
-                          className={`w-full text-left p-2.5 rounded-xl flex items-start gap-3 transition-colors cursor-pointer ${
-                            currentPage === prog.id
-                              ? 'bg-orange-50 text-[#F15A24] font-bold'
-                              : 'hover:bg-slate-50 text-slate-800'
-                          }`}
+                          key={idx}
+                          onClick={() => handleNavClick(item.page)}
+                          className="w-full text-left p-2 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-2.5 cursor-pointer"
                         >
-                          <div className="p-2 rounded-lg bg-slate-100 mt-0.5 shrink-0">
-                            {prog.icon}
+                          <div className="p-1.5 rounded-lg bg-slate-100 shrink-0 mt-0.5">
+                            {item.icon}
                           </div>
-                          <div className="min-w-0">
-                            <div className="text-xs font-bold text-slate-900">
-                              {prog.title}
-                            </div>
-                            <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
-                              {prog.description}
-                            </div>
+                          <div>
+                            <div className="text-xs font-bold text-slate-900">{item.title}</div>
+                            <div className="text-[10px] text-slate-500 line-clamp-1">{item.desc}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Business Units Dropdown */}
+              <div
+                className="relative"
+                ref={unitsRef}
+                onMouseEnter={() => setBusinessUnitsDropdownOpen(true)}
+                onMouseLeave={() => setBusinessUnitsDropdownOpen(false)}
+              >
+                <button
+                  onClick={() => setBusinessUnitsDropdownOpen(!businessUnitsDropdownOpen)}
+                  className={`text-sm font-semibold transition-colors py-1 flex items-center gap-1 cursor-pointer ${
+                    currentPage === 'courseware' ||
+                    currentPage === 'bookstore' ||
+                    currentPage === 'digital-hub'
+                      ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
+                      : 'text-slate-700 hover:text-[#1E4592]'
+                  }`}
+                >
+                  <span>Business Units</span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-150 ${
+                      businessUnitsDropdownOpen ? 'rotate-180 text-[#1E4592]' : 'text-slate-400'
+                    }`}
+                  />
+                </button>
+
+                {businessUnitsDropdownOpen && (
+                  <div className="absolute left-0 mt-1 w-84 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 animate-in fade-in-50 duration-150">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#1E4592] px-3 py-1.5 border-b border-slate-100">
+                      Seven Business Units
+                    </div>
+                    <div className="space-y-1 pt-1.5">
+                      {businessUnitsList.map((unit, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleNavClick(unit.page)}
+                          className="w-full text-left p-2 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-2.5 cursor-pointer"
+                        >
+                          <div className="p-1.5 rounded-lg bg-slate-100 shrink-0 mt-0.5">
+                            {unit.icon}
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-slate-900">{unit.title}</div>
+                            <div className="text-[10px] text-slate-500 line-clamp-1">{unit.desc}</div>
                           </div>
                         </button>
                       ))}
@@ -222,21 +335,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
 
               <button
-                onClick={() => handleNavClick('infographics')}
-                className={`text-sm font-semibold transition-colors py-1 cursor-pointer ${
-                  currentPage === 'infographics'
-                    ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
-                    : 'text-slate-700 hover:text-[#1E4592]'
-                }`}
-              >
-                Infographics
-              </button>
-
-              <button
                 onClick={() => handleNavClick('partners')}
                 className={`text-sm font-semibold transition-colors py-1 cursor-pointer ${
                   currentPage === 'partners'
-                    ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
+                    ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
                     : 'text-slate-700 hover:text-[#1E4592]'
                 }`}
               >
@@ -247,265 +349,219 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => handleNavClick('contact')}
                 className={`text-sm font-semibold transition-colors py-1 cursor-pointer ${
                   currentPage === 'contact'
-                    ? 'text-[#1E4592] border-b-2 border-[#1E4592] font-bold'
+                    ? 'text-[#1E4592] font-bold border-b-2 border-[#1E4592]'
                     : 'text-slate-700 hover:text-[#1E4592]'
                 }`}
               >
-                Contact
+                Contact Us
+              </button>
+            </nav>
+
+            {/* 3. RIGHT CONTROLS: SEARCH & GET IN TOUCH */}
+            <div className="flex items-center gap-3">
+              {/* Search Toggle Button */}
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="w-9 h-9 rounded-full flex items-center justify-center text-slate-600 hover:text-[#1E4592] hover:bg-slate-100 transition-colors cursor-pointer"
+                aria-label="Search website"
+              >
+                <Search className="w-4 h-4" />
               </button>
 
-              {/* CTA Button */}
+              {/* Sample / Consultation Request Count (if items selected) */}
+              {quoteItems.length > 0 && (
+                <button
+                  onClick={onOpenQuoteModal}
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-[#1E4592] hover:bg-blue-100 rounded-full text-xs font-semibold border border-blue-200 transition-colors cursor-pointer"
+                  title="View Sample & Consultation Request List"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#1E4592]" />
+                  <span>Request List ({quoteItems.length})</span>
+                </button>
+              )}
+
+              {/* Primary CTA: "Get in Touch" (Exact match to uploaded design!) */}
               <button
-                onClick={() => handleNavClick('courseware')}
-                className="px-4 py-2 rounded-xl bg-[#F15A24] hover:bg-[#D44512] text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                onClick={() => handleNavClick('contact')}
+                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-[#1E4592] hover:bg-[#153472] text-white text-xs sm:text-sm font-semibold rounded-full shadow-xs hover:shadow transition-all cursor-pointer"
               >
-                <span>Explore Curricula</span>
+                <span>Get in Touch</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
-              {/* Quotation Basket Indicator */}
-              {quoteItems.length > 0 && (
-                <button
-                  onClick={onOpenQuoteModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#1E4592] bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors border border-blue-200 cursor-pointer shadow-xs"
-                  title="View Inspection Copy & Quotation Basket"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5 text-[#F15A24]" />
-                  <span>Quote ({quoteItems.length})</span>
-                </button>
-              )}
-            </nav>
-
-            {/* Mobile Navigation Trigger Bar */}
-            <div className="flex items-center gap-2 lg:hidden">
-              {quoteItems.length > 0 && (
-                <button
-                  onClick={onOpenQuoteModal}
-                  className="p-2 text-slate-700 bg-blue-50 border border-blue-200 rounded-lg relative cursor-pointer"
-                  title="Inquiry List"
-                  aria-label={`Inquiry List (${quoteItems.length} items)`}
-                >
-                  <ShoppingBag className="w-4 h-4 text-[#1E4592]" />
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#F15A24] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                    {quoteItems.length}
-                  </span>
-                </button>
-              )}
-
+              {/* Mobile Menu Trigger */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 rounded-lg text-slate-800 hover:bg-slate-100 focus:outline-none cursor-pointer transition-colors"
+                className="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
                 aria-label="Open navigation menu"
-                aria-expanded={mobileMenuOpen}
               >
-                <Menu className="w-6 h-6 text-slate-900" />
+                <Menu className="w-5 h-5" />
               </button>
             </div>
           </div>
+
+          {/* Expandable Search Input Row */}
+          {searchOpen && (
+            <form onSubmit={handleSearchSubmit} className="mt-3 pt-3 border-t border-slate-100">
+              <div className="relative max-w-lg mx-auto">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Search curricula, robotics, bookstore, partnerships..."
+                  className="w-full pl-10 pr-20 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-full focus:outline-none focus:border-[#1E4592] focus:bg-white transition-all"
+                  autoFocus
+                />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <button
+                  type="submit"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#1E4592] text-white text-xs font-medium rounded-full cursor-pointer hover:bg-[#153472]"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </header>
 
-      {/* Slide-out Hamburger Menu Drawer for Mobile & Tablet */}
-      <div
-        className={`fixed inset-0 z-50 lg:hidden transition-visibility duration-300 ${
-          mobileMenuOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-        }`}
-        aria-hidden={!mobileMenuOpen}
-      >
-        {/* Backdrop Overlay with Soft Blur */}
-        <div
-          onClick={() => setMobileMenuOpen(false)}
-          className={`absolute inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity duration-300 ease-out ${
-            mobileMenuOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-label="Close navigation drawer"
-        />
+      {/* MOBILE NAVIGATION DRAWER (No Impact, No Resources) */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+          />
 
-        {/* Slide-out Drawer Panel */}
-        <div
-          className={`absolute inset-y-0 right-0 w-full max-w-[340px] sm:max-w-sm bg-white shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-in-out ${
-            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Site navigation"
-        >
-          {/* Drawer Header */}
-          <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <DIRLogo size="sm" showText={false} />
-              <div>
-                <div className="font-display font-extrabold text-sm text-[#1E4592] tracking-tight">
-                  DIR Services
-                </div>
-                <div className="text-[10px] text-slate-500 font-medium">
-                  Digital Information Resources
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200/70 transition-colors cursor-pointer"
-              aria-label="Close menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Drawer Scrollable Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-            {/* Primary Nav Links */}
-            <div className="space-y-1">
+          {/* Drawer Content */}
+          <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-200">
+            {/* Header */}
+            <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+              <DIRLogo size="sm" showText={true} />
               <button
-                onClick={() => handleNavClick('home')}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  currentPage === 'home'
-                    ? 'bg-blue-50 text-[#1E4592] font-bold border border-blue-200/80'
-                    : 'text-slate-800 hover:bg-slate-100'
-                }`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-100 cursor-pointer"
+                aria-label="Close menu"
               >
-                <span>Home</span>
-                {currentPage === 'home' && <span className="w-1.5 h-1.5 rounded-full bg-[#1E4592]" />}
-              </button>
-
-              <button
-                onClick={() => handleNavClick('about')}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  currentPage === 'about'
-                    ? 'bg-blue-50 text-[#1E4592] font-bold border border-blue-200/80'
-                    : 'text-slate-800 hover:bg-slate-100'
-                }`}
-              >
-                <span>About Corporate Heritage</span>
-                {currentPage === 'about' && <span className="w-1.5 h-1.5 rounded-full bg-[#1E4592]" />}
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Programmes Collapsible / Structured Section */}
-            <div className="pt-2 border-t border-slate-150">
-              <div className="flex items-center justify-between px-3 py-1.5">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600">
-                  Educational Units & Curricula
-                </span>
+            {/* Scrollable Links */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 text-sm">
+              <div className="space-y-1">
                 <button
-                  onClick={() => setMobileProgrammesExpanded(!mobileProgrammesExpanded)}
-                  className="text-xs text-[#1E4592] font-semibold cursor-pointer"
+                  onClick={() => handleNavClick('home')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl font-semibold transition-colors cursor-pointer ${
+                    currentPage === 'home'
+                      ? 'bg-blue-50 text-[#1E4592]'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
                 >
-                  {mobileProgrammesExpanded ? 'Collapse' : 'Expand'}
+                  Home
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('about')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl font-semibold transition-colors cursor-pointer ${
+                    currentPage === 'about'
+                      ? 'bg-blue-50 text-[#1E4592]'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  About Us
                 </button>
               </div>
 
-              {mobileProgrammesExpanded && (
-                <div className="space-y-1 mt-1">
-                  {programmeOptions.map((prog) => (
+              {/* Solutions section */}
+              <div className="pt-2 border-t border-slate-100">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-1">
+                  Solutions
+                </div>
+                <div className="space-y-1">
+                  {solutionsList.map((sol, idx) => (
                     <button
-                      key={prog.id}
-                      onClick={() => handleNavClick(prog.id)}
-                      className={`w-full text-left p-2.5 rounded-xl flex items-start gap-3 transition-colors cursor-pointer ${
-                        currentPage === prog.id
-                          ? 'bg-orange-50 text-[#F15A24] font-bold border border-orange-200/80'
-                          : 'hover:bg-slate-50 text-slate-800'
-                      }`}
+                      key={idx}
+                      onClick={() => handleNavClick(sol.page)}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 cursor-pointer"
                     >
-                      <div className="p-1.5 rounded-lg bg-slate-100 mt-0.5 shrink-0">
-                        {prog.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold text-slate-900">
-                          {prog.title}
-                        </div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
-                          {prog.description}
-                        </div>
-                      </div>
+                      <div className="p-1 rounded-md bg-slate-100">{sol.icon}</div>
+                      <span>{sol.title}</span>
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
+
+              {/* Business Units section */}
+              <div className="pt-2 border-t border-slate-100">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-1">
+                  Business Units
+                </div>
+                <div className="space-y-1">
+                  {businessUnitsList.map((unit, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleNavClick(unit.page)}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 cursor-pointer"
+                    >
+                      <div className="p-1 rounded-md bg-slate-100">{unit.icon}</div>
+                      <span>{unit.title}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Partners & Contact */}
+              <div className="pt-2 border-t border-slate-100 space-y-1">
+                <button
+                  onClick={() => handleNavClick('partners')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl font-semibold transition-colors cursor-pointer ${
+                    currentPage === 'partners'
+                      ? 'bg-blue-50 text-[#1E4592]'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  Partners
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('contact')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl font-semibold transition-colors cursor-pointer ${
+                    currentPage === 'contact'
+                      ? 'bg-blue-50 text-[#1E4592]'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  Contact Us
+                </button>
+              </div>
             </div>
 
-            {/* Secondary Nav Links */}
-            <div className="pt-2 border-t border-slate-150 space-y-1">
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 px-3 block mb-1">
-                Institutional Resources
-              </span>
-
-              <button
-                onClick={() => handleNavClick('infographics')}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  currentPage === 'infographics'
-                    ? 'bg-blue-50 text-[#1E4592] font-bold border border-blue-200/80'
-                    : 'text-slate-800 hover:bg-slate-100'
-                }`}
-              >
-                <span>Architectural Infographics</span>
-                {currentPage === 'infographics' && <span className="w-1.5 h-1.5 rounded-full bg-[#1E4592]" />}
-              </button>
-
-              <button
-                onClick={() => handleNavClick('partners')}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  currentPage === 'partners'
-                    ? 'bg-blue-50 text-[#1E4592] font-bold border border-blue-200/80'
-                    : 'text-slate-800 hover:bg-slate-100'
-                }`}
-              >
-                <span>Partner Schools & Bookstores</span>
-                {currentPage === 'partners' && <span className="w-1.5 h-1.5 rounded-full bg-[#1E4592]" />}
-              </button>
-
+            {/* Mobile Footer CTA */}
+            <div className="p-4 border-t border-slate-100 space-y-3 bg-slate-50">
               <button
                 onClick={() => handleNavClick('contact')}
-                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between cursor-pointer ${
-                  currentPage === 'contact'
-                    ? 'bg-blue-50 text-[#1E4592] font-bold border border-blue-200/80'
-                    : 'text-slate-800 hover:bg-slate-100'
-                }`}
+                className="w-full py-3 bg-[#1E4592] hover:bg-[#153472] text-white text-xs font-semibold rounded-full shadow-xs flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Contact & Yangon HQ</span>
-                {currentPage === 'contact' && <span className="w-1.5 h-1.5 rounded-full bg-[#1E4592]" />}
+                <span>Get in Touch</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
-            </div>
 
-            {/* Quick Contact Badge */}
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs text-slate-600">
-              <div className="flex items-center gap-2 font-semibold text-slate-800">
-                <MapPin className="w-3.5 h-3.5 text-[#1E4592]" />
-                <span>Mayangone Headquarters</span>
+              <div className="flex items-center justify-center gap-4 text-[11px] text-slate-500">
+                <a href="tel:+9518651049" className="flex items-center gap-1 hover:text-[#1E4592]">
+                  <PhoneCall className="w-3 h-3 text-[#1E4592]" />
+                  <span>+95 186 510 49</span>
+                </a>
+                <a href="mailto:info@dir.com.mm" className="flex items-center gap-1 hover:text-[#1E4592]">
+                  <Mail className="w-3 h-3 text-[#1E4592]" />
+                  <span>info@dir.com.mm</span>
+                </a>
               </div>
-              <p className="text-[11px] text-slate-500 pl-5.5">
-                No. 123, Thamine Railway Station Rd, Yangon
-              </p>
             </div>
-          </div>
-
-          {/* Drawer Footer Actions */}
-          <div className="p-4 border-t border-slate-200 bg-slate-50 space-y-2.5">
-            <button
-              onClick={() => handleNavClick('courseware')}
-              className="w-full py-3 px-4 rounded-xl bg-[#F15A24] hover:bg-[#D44512] text-white text-xs font-bold shadow-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
-            >
-              <span>Explore Courseware Solutions</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-
-            {quoteItems.length > 0 && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenQuoteModal();
-                }}
-                className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-100 text-[#1E4592] text-xs font-bold border border-blue-200 flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
-              >
-                <ShoppingBag className="w-4 h-4 text-[#F15A24]" />
-                <span>View Quotation Basket ({quoteItems.length} items)</span>
-              </button>
-            )}
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
-

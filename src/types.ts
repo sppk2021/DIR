@@ -1,12 +1,16 @@
 export type PageId =
   | 'home'
   | 'about'
+  | 'solutions'
   | 'services'
+  | 'business-units'
   | 'courseware'
   | 'bookstore'
   | 'digital-hub'
-  | 'infographics'
   | 'partners'
+  | 'impact'
+  | 'infographics'
+  | 'resources'
   | 'contact';
 
 export interface CurriculumItem {

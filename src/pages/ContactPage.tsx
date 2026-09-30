@@ -109,10 +109,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     <Mail className="w-5 h-5" />
                   </div>
                   <div className="space-y-1">
-                    <strong className="block text-slate-900 font-semibold text-sm">Official Inquiry Email</strong>
+                    <strong className="block text-slate-900 font-semibold text-sm">Official Contact Email</strong>
                     <a
                       href={`mailto:${COMPANY_INFO.email}`}
-                      className="text-blue-600 hover:underline font-medium text-xs block"
+                      className="text-[#1E4592] hover:underline font-medium text-xs block"
                     >
                       {COMPANY_INFO.email}
                     </a>
@@ -197,7 +197,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     Message Sent Successfully!
                   </h3>
                   <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="text-slate-900">{fullName}</strong>. Your inquiry regarding <strong className="text-slate-900">{unitInterest}</strong> has been transmitted to our office in Mayangone, Yangon.
+                    Thank you, <strong className="text-slate-900">{fullName}</strong>. Your message regarding <strong className="text-slate-900">{unitInterest}</strong> has been transmitted to our office in Mayangone, Yangon.
                   </p>
                   <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 max-w-md mx-auto text-left text-xs space-y-1.5 text-slate-600">
                     <div><strong>Email:</strong> {email}</div>
@@ -209,16 +209,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       setSubmitted(false);
                       setMessage('');
                     }}
-                    className="px-6 py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700"
+                    className="px-6 py-2.5 bg-[#1E4592] text-white text-xs font-semibold rounded-lg hover:bg-[#153472] cursor-pointer"
                   >
-                    Send Another Inquiry
+                    Send Another Message
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <h3 className="font-display font-bold text-xl text-slate-900">
-                      Send an Official Inquiry
+                      Send Us a Message
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Request inspection copies, teacher training, retail terms, or trial STEM classes.
@@ -292,12 +292,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Business Unit / Inquiry Area
+                      Business Unit / Subject Area
                     </label>
                     <select
                       value={unitInterest}
                       onChange={(e) => setUnitInterest(e.target.value)}
-                      className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
+                      className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1E4592] focus:outline-none bg-white"
                     >
                       <option>DIR Courseware (School B2B)</option>
                       <option>Jolly Classroom Phonics Whiteboard Demo</option>
@@ -330,10 +330,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     </span>
                     <button
                       type="submit"
-                      className="flex items-center gap-1.5 px-6 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 shadow-xs transition-colors"
+                      className="flex items-center gap-1.5 px-6 py-2.5 bg-[#1E4592] text-white rounded-lg text-xs font-semibold hover:bg-[#153472] shadow-xs transition-colors cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>Transmit Inquiry</span>
+                      <span>Send Message</span>
                     </button>
                   </div>
                 </form>

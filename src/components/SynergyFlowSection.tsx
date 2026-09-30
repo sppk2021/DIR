@@ -146,6 +146,33 @@ export const SynergyFlowSection: React.FC<{ className?: string; onNavigateUnit?:
         </div>
       </div>
 
+      {/* Established Milestone Track (2005 -> 2018 -> 2020 -> 2022) */}
+      <div className="relative py-2 hidden sm:block">
+        <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-slate-200 -translate-y-1/2 z-0" />
+        <div className="grid grid-cols-4 gap-4 relative z-10">
+          {units.map((u) => {
+            const isSelected = u.id === selectedUnitId;
+            return (
+              <div key={u.id} className="flex flex-col items-center">
+                <button
+                  onClick={() => setSelectedUnitId(u.id)}
+                  className={`w-9 h-9 rounded-full font-mono text-xs font-bold flex items-center justify-center transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#1E4592] text-white ring-4 ring-blue-100 shadow-sm scale-110'
+                      : 'bg-white text-slate-700 border-2 border-slate-300 hover:border-[#1E4592]'
+                  }`}
+                  aria-label={`View unit ${u.shortName} established in ${u.year}`}
+                >
+                  {u.year.slice(2)}&apos;
+                </button>
+                <span className="text-[11px] font-bold text-slate-700 mt-1.5">{u.year}</span>
+                <span className="text-[10px] text-slate-500 font-medium truncate max-w-[120px]">{u.shortName}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Established Years & Unit Grid Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {units.map((unit) => {
@@ -162,15 +189,15 @@ export const SynergyFlowSection: React.FC<{ className?: string; onNavigateUnit?:
             >
               {/* Year & Unit Type Header */}
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-display font-black text-xl text-slate-900 tracking-tight">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-display font-black text-2xl text-slate-900 tracking-tight tabular-nums">
                     {unit.year}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-mono font-medium">
-                    (Est.)
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    Established
                   </span>
                 </div>
-                <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${unit.badgeStyle}`}>
+                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md border ${unit.badgeStyle}`}>
                   {unit.unitType}
                 </span>
               </div>
@@ -194,7 +221,7 @@ export const SynergyFlowSection: React.FC<{ className?: string; onNavigateUnit?:
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600">
                 <span className="font-medium text-slate-500">{unit.fullDate}</span>
                 <span className="font-bold text-[#1E4592]">
-                  {isSelected ? 'Active Unit' : 'Select Unit'}
+                  {isSelected ? 'Active Selection' : 'View Unit'}
                 </span>
               </div>
             </button>

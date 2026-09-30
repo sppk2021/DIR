@@ -1,30 +1,35 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { COMPANY_INFO } from '../data/dirData';
+import React, { useState } from 'react';
 import { PageId, QuoteItem } from '../types';
-import { TestimonialCarousel } from '../components/TestimonialCarousel';
-import { HomeImageCarousel } from '../components/HomeImageCarousel';
-import { PartnerLogoCarousel } from '../components/PartnerLogoCarousel';
-import { SynergyFlowSection } from '../components/SynergyFlowSection';
-import { SectionDivider } from '../components/SectionDivider';
-import { HomePageSkeleton } from '../components/HomePageSkeleton';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
+  Play,
   BookOpen,
-  Bot,
-  Layers,
-  Award,
-  ChevronRight,
-  Building2,
-  ShieldCheck,
-  Search,
+  Laptop,
   GraduationCap,
-  Store,
+  Library,
+  Landmark,
+  Palette,
   Users,
+  Globe2,
+  ShieldCheck,
+  Compass,
+  Cpu,
+  Building2,
+  Bot,
+  Store,
+  Sparkles,
+  School,
+  UserCheck,
+  Award,
+  Layers,
   CheckCircle2,
-  FileText,
-  ExternalLink
+  X
 } from 'lucide-react';
+
+import heroClassroomImg from '../assets/images/myanmar_classroom_learning_1790172148897.jpg';
+import campusImg from '../assets/images/modern_school_campus_1790752281948.jpg';
+import libraryReadingImg from '../assets/images/library_teacher_students_1790752299661.jpg';
+import partnersGlobeImg from '../assets/images/partners_globe_books_1790752316364.jpg';
 
 interface HomePageProps {
   onNavigate: (page: PageId) => void;
@@ -37,685 +42,685 @@ export const HomePage: React.FC<HomePageProps> = ({
   onAddToQuote,
   onOpenQuoteModal
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const { scrollY } = useScroll();
-  const heroContentY = useTransform(scrollY, [0, 500], [0, 30]);
-  const heroBgY = useTransform(scrollY, [0, 500], [0, -40]);
-  const heroCardY = useTransform(scrollY, [0, 500], [0, 20]);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
-  useEffect(() => {
-    // Smooth skeleton reveal transition
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-    const q = searchQuery.toLowerCase();
-    if (q.includes('robot') || q.includes('code') || q.includes('python') || q.includes('scratch') || q.includes('stem')) {
-      onNavigate('digital-hub');
-    } else if (q.includes('dog') || q.includes('man') || q.includes('book') || q.includes('toy') || q.includes('domino')) {
-      onNavigate('bookstore');
-    } else {
-      onNavigate('courseware');
+  // 6 Solutions
+  const solutions = [
+    {
+      id: 'curriculum',
+      title: 'Curriculum & Learning',
+      subtext: 'ICT, Coding, Robotics, STEM, Languages',
+      bgClass: 'bg-[#EBF3FE] border-blue-100/80 hover:border-blue-300',
+      iconClass: 'text-[#1E4592]',
+      icon: <BookOpen className="w-6 h-6" />,
+      targetPage: 'courseware' as PageId
+    },
+    {
+      id: 'digital',
+      title: 'Digital Learning & Technology',
+      subtext: 'LMS, Online Learning, Digital Resources',
+      bgClass: 'bg-[#E8FAF4] border-emerald-100/80 hover:border-emerald-300',
+      iconClass: 'text-[#059669]',
+      icon: <Laptop className="w-6 h-6" />,
+      targetPage: 'digital-hub' as PageId
+    },
+    {
+      id: 'teacher',
+      title: 'Teacher Development',
+      subtext: 'Training, TOT, Professional Growth',
+      bgClass: 'bg-[#F4EEFE] border-purple-100/80 hover:border-purple-300',
+      iconClass: 'text-[#7C3AED]',
+      icon: <GraduationCap className="w-6 h-6" />,
+      targetPage: 'services' as PageId
+    },
+    {
+      id: 'resources',
+      title: 'Educational Resources',
+      subtext: 'Books, Teaching Materials, Publishing',
+      bgClass: 'bg-[#FFF9E6] border-amber-100/80 hover:border-amber-300',
+      iconClass: 'text-[#D97706]',
+      icon: <Library className="w-6 h-6" />,
+      targetPage: 'bookstore' as PageId
+    },
+    {
+      id: 'library',
+      title: 'Library Solutions',
+      subtext: 'Library Management, Equipment, Setup',
+      bgClass: 'bg-[#E9F7FA] border-teal-100/80 hover:border-teal-300',
+      iconClass: 'text-[#0891B2]',
+      icon: <Landmark className="w-6 h-6" />,
+      targetPage: 'services' as PageId
+    },
+    {
+      id: 'creative',
+      title: 'Creative & Digital Services',
+      subtext: 'Content, Design, Marketing Support',
+      bgClass: 'bg-[#FEEFF4] border-rose-100/80 hover:border-rose-300',
+      iconClass: 'text-[#E11D48]',
+      icon: <Palette className="w-6 h-6" />,
+      targetPage: 'services' as PageId
     }
-  };
-
-  const quickSearchTags = [
-    { label: 'Jolly Phonics', page: 'courseware' as PageId },
-    { label: 'NatGeo Look', page: 'courseware' as PageId },
-    { label: 'Binary Logic Computing', page: 'courseware' as PageId },
-    { label: 'STEM Robotics Lab', page: 'digital-hub' as PageId },
-    { label: 'Dav Pilkey Books', page: 'bookstore' as PageId },
-    { label: 'Teacher Training', page: 'services' as PageId }
   ];
 
-  if (isLoading) {
-    return (
-      <div className="animate-in fade-in duration-300">
-        <HomePageSkeleton />
-      </div>
-    );
-  }
+  // 6 Why DIR Features
+  const whyDirPoints = [
+    {
+      title: 'Integrated Solutions',
+      desc: 'All your education needs, in one place',
+      icon: <Layers className="w-4 h-4 text-white" />
+    },
+    {
+      title: 'Experienced Team',
+      desc: 'Education and industry professionals',
+      icon: <Users className="w-4 h-4 text-white" />
+    },
+    {
+      title: 'Global Partnerships',
+      desc: 'Trusted international publishers and technology providers',
+      icon: <Globe2 className="w-4 h-4 text-white" />
+    },
+    {
+      title: 'Reliable Support',
+      desc: 'From implementation to ongoing service',
+      icon: <ShieldCheck className="w-4 h-4 text-white" />
+    },
+    {
+      title: 'Local Expertise',
+      desc: 'Understanding Myanmar’s education landscape',
+      icon: <Compass className="w-4 h-4 text-white" />
+    },
+    {
+      title: 'Future-Focused',
+      desc: 'Preparing learners for a digital and AI-driven world',
+      icon: <Cpu className="w-4 h-4 text-white" />
+    }
+  ];
+
+  // 5 Stakeholders
+  const stakeholders = [
+    {
+      title: 'Schools',
+      desc: 'Integrated solutions for modern learning environments.',
+      icon: <School className="w-6 h-6 text-[#1E4592]" />
+    },
+    {
+      title: 'Teachers',
+      desc: 'Training, resources and practical support.',
+      icon: <UserCheck className="w-6 h-6 text-[#0284C7]" />
+    },
+    {
+      title: 'Students',
+      desc: 'Build future-ready skills and confidence.',
+      icon: <Users className="w-6 h-6 text-[#0D9488]" />
+    },
+    {
+      title: 'School Leaders',
+      desc: 'Guidance and implementation support.',
+      icon: <GraduationCap className="w-6 h-6 text-[#1E4592]" />
+    },
+    {
+      title: 'Libraries & Institutions',
+      desc: 'Modern library technology, resources and services.',
+      icon: <Landmark className="w-6 h-6 text-[#0891B2]" />
+    }
+  ];
+
+  // 7 Business Units
+  const businessUnits = [
+    {
+      id: 'dir-courseware',
+      name: 'DIR Courseware',
+      bgClass: 'bg-[#EBF3FE] text-[#1E4592] border-blue-100',
+      icon: <BookOpen className="w-5 h-5" />,
+      targetPage: 'courseware' as PageId
+    },
+    {
+      id: 'wdlh',
+      name: 'Win Digital Learning Hub (WDLH)',
+      bgClass: 'bg-[#E8FAF4] text-[#059669] border-emerald-100',
+      icon: <Bot className="w-5 h-5" />,
+      targetPage: 'digital-hub' as PageId
+    },
+    {
+      id: 'ubs',
+      name: 'U Book Store (UBS)',
+      bgClass: 'bg-[#FFF9E6] text-[#D97706] border-amber-100',
+      icon: <Store className="w-5 h-5" />,
+      targetPage: 'bookstore' as PageId
+    },
+    {
+      id: 'publishing',
+      name: 'U Book Publishing House',
+      bgClass: 'bg-[#F4EEFE] text-[#7C3AED] border-purple-100',
+      icon: <Building2 className="w-5 h-5" />,
+      targetPage: 'courseware' as PageId
+    },
+    {
+      id: 'creative',
+      name: 'Win Creative Agency',
+      bgClass: 'bg-[#FEEFF4] text-[#E11D48] border-rose-100',
+      icon: <Sparkles className="w-5 h-5" />,
+      targetPage: 'services' as PageId
+    },
+    {
+      id: 'library-sol',
+      name: 'U Library Solution',
+      bgClass: 'bg-[#E9F7FA] text-[#0891B2] border-teal-100',
+      icon: <Landmark className="w-5 h-5" />,
+      targetPage: 'services' as PageId
+    },
+    {
+      id: 'consultancy',
+      name: 'U Educational Consultancy',
+      bgClass: 'bg-[#FEFCE8] text-[#CA8A04] border-yellow-100',
+      icon: <GraduationCap className="w-5 h-5" />,
+      targetPage: 'services' as PageId
+    }
+  ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="space-y-16 sm:space-y-24 pb-16 overflow-hidden"
-    >
-      {/* 1. Main Visual Gallery Carousel (Education in Action) */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 pt-6 sm:pt-8">
-          <HomeImageCarousel onNavigate={onNavigate} />
-        </section>
-      </motion.div>
+    <div className="space-y-16 sm:space-y-24 pb-0 bg-white">
+      {/* 1. HERO SECTION */}
+      <section className="pt-6 sm:pt-10 lg:pt-14 pb-8 sm:pb-12 max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Text */}
+          <div className="lg:col-span-6 space-y-6">
+            <span className="text-xs font-bold tracking-wider uppercase text-[#0284C7] block">
+              Integrated Education Solutions
+            </span>
 
-      <SectionDivider type="wave" />
+            <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-[54px] text-slate-900 tracking-tight leading-[1.12]">
+              Building Future-Ready <br className="hidden sm:block" />
+              Learners, Together
+            </h1>
 
-      {/* 2. Hero Section: Clean, Authoritative & Architectural */}
-      <div className="relative">
-        <section className="bg-slate-50 border-y border-slate-200 py-12 sm:py-18 relative z-10">
-          <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              {/* Left Column: Mission, Value & Direct Search */}
-              <motion.div
-                style={{ y: heroContentY }}
-                className="lg:col-span-7 space-y-6"
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+              DIR provides integrated education solutions for schools, educators, students, libraries and education organizations through curriculum, technology, learning resources, teacher development and more.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={() => onNavigate('courseware')}
+                className="px-6 py-3 bg-[#1E4592] hover:bg-[#153472] text-white text-xs sm:text-sm font-semibold rounded-full shadow-xs hover:shadow transition-all flex items-center gap-2 cursor-pointer"
               >
-                {/* Unboxed Header Metadata */}
-                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
-                  <span className="text-[#1E4592] font-bold">Digital Information Resources Co., Ltd</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Est. 2018</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Member of Myint Thuka Nadi Group (Est. 2005)</span>
-                  <span aria-hidden="true">·</span>
-                  <span>Yangon, Myanmar</span>
-                </div>
+                <span>Explore Our Solutions</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
 
-                <h1 className="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-slate-900 tracking-tight leading-[1.12] text-balance">
-                  International Curricula, Children&apos;s Books & STEM Education in Myanmar
-                </h1>
-
-                <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl">
-                  Digital Information Resources Co., Ltd (DIR) is Myanmar&apos;s authorized provider of world-standard curricula (Jolly Phonics, National Geographic Learning, Binary Logic), operator of U Book Store wholesale distribution, and founder of Win Digital Learning Hub.
-                </p>
-
-                {/* Instant Search Bar for High Everyday Utility */}
-                <form onSubmit={handleSearchSubmit} className="space-y-2 max-w-xl">
-                  <div className="relative flex items-center">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search Jolly Phonics, NatGeo Look, Dav Pilkey, STEM courses..."
-                      className="w-full pl-10 pr-28 py-3 bg-white border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1E4592] focus:border-[#1E4592] shadow-2xs transition-all"
-                    />
-                    <button
-                      type="submit"
-                      className="absolute right-1.5 px-3.5 py-2 bg-[#1E4592] hover:bg-[#163570] text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-                    >
-                      Search
-                    </button>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs text-slate-500">
-                    <span className="font-medium text-slate-400">Popular:</span>
-                    {quickSearchTags.map((t, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => onNavigate(t.page)}
-                        className="px-2.5 py-1 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-[#1E4592] hover:border-slate-300 transition-colors cursor-pointer text-xs"
-                      >
-                        {t.label}
-                      </button>
-                    ))}
-                  </div>
-                </form>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <button
-                    onClick={() => onNavigate('courseware')}
-                    className="px-5 py-3 bg-[#F15A24] hover:bg-[#D44512] text-white font-semibold text-sm rounded-xl transition-all shadow-xs hover:shadow-sm flex items-center gap-2 cursor-pointer"
-                  >
-                    <span>Explore Courseware Catalog</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={onOpenQuoteModal}
-                    className="px-5 py-3 bg-white text-slate-800 hover:text-[#1E4592] font-semibold text-sm rounded-xl transition-all border border-slate-300 hover:border-slate-400 shadow-2xs flex items-center gap-2 cursor-pointer"
-                  >
-                    <FileText className="w-4 h-4 text-[#1E4592]" />
-                    <span>Request Inspection Copy</span>
-                  </button>
-
-                  <button
-                    onClick={() => onNavigate('contact')}
-                    className="px-4 py-3 text-slate-700 hover:text-slate-900 font-semibold text-sm rounded-xl hover:bg-slate-200/60 transition-colors cursor-pointer"
-                  >
-                    Contact Yangon Office
-                  </button>
-                </div>
-
-                {/* Key Quantitative Proof */}
-                <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-6 max-w-lg">
-                  <div>
-                    <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">21+</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Years Group Heritage</div>
-                  </div>
-                  <div>
-                    <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">50+</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Partner Schools & Stores</div>
-                  </div>
-                  <div>
-                    <div className="font-mono font-bold text-2xl text-slate-900 tabular-nums">100+</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Teachers Certified / Year</div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right Column: Clean Corporate Directory Card with Parallax Depth */}
-              <motion.div
-                style={{ y: heroCardY }}
-                className="lg:col-span-5"
+              <button
+                onClick={() => onNavigate('about')}
+                className="px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-semibold rounded-full border border-slate-300 transition-colors cursor-pointer"
               >
-                <div className="rounded-xl bg-white p-6 sm:p-7 border border-slate-200 shadow-sm space-y-5">
-                  <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                    <div>
-                      <h2 className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
-                        Integrated Structure
-                      </h2>
-                      <h3 className="font-display font-bold text-lg text-slate-900 mt-0.5">
-                        Three Specialized Divisions
-                      </h3>
-                    </div>
-                    <span className="text-xs text-slate-500 font-mono">Yangon Hub</span>
-                  </div>
+                About DIR
+              </button>
 
-                  <div className="space-y-3">
-                    {/* Division 1 */}
-                    <div
-                      onClick={() => onNavigate('courseware')}
-                      className="p-3.5 rounded-xl border border-slate-200/80 hover:border-[#1E4592] hover:bg-blue-50/30 transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-xl bg-blue-50 text-[#1E4592] group-hover:bg-[#1E4592] group-hover:text-white transition-colors">
-                          <Layers className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#1E4592] transition-colors">
-                              DIR Courseware
-                            </h4>
-                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#1E4592] group-hover:translate-x-0.5 transition-transform" />
-                          </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
-                            Institutional partner for Jolly Phonics, NatGeo & Binary Logic with CPT software.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Division 2 */}
-                    <div
-                      onClick={() => onNavigate('bookstore')}
-                      className="p-3.5 rounded-xl border border-slate-200/80 hover:border-[#F15A24] hover:bg-orange-50/30 transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-xl bg-orange-50 text-[#F15A24] group-hover:bg-[#F15A24] group-hover:text-white transition-colors">
-                          <Store className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#F15A24] transition-colors">
-                              U Book Store (UBS)
-                            </h4>
-                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#F15A24] group-hover:translate-x-0.5 transition-transform" />
-                          </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
-                            Distributor of kids books, Dav Pilkey Dog Man & educational activity packs.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Division 3 */}
-                    <div
-                      onClick={() => onNavigate('digital-hub')}
-                      className="p-3.5 rounded-xl border border-slate-200/80 hover:border-indigo-600 hover:bg-indigo-50/30 transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                          <Bot className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <h4 className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                              Win Digital Learning Hub
-                            </h4>
-                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-transform" />
-                          </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
-                            Weekend hands-on STEM robotics, Scratch & Python classes for ages 5–17.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span>Parent Group: Myint Thuka Nadi</span>
-                    <button
-                      onClick={() => onNavigate('about')}
-                      className="text-[#1E4592] hover:text-[#F15A24] font-semibold flex items-center gap-1 cursor-pointer transition-colors"
-                    >
-                      <span>View Corporate History</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
+              <button
+                onClick={() => setVideoModalOpen(true)}
+                className="px-4 py-3 text-slate-700 hover:text-[#1E4592] text-xs sm:text-sm font-semibold flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                <div className="w-7 h-7 rounded-full bg-blue-50 text-[#1E4592] flex items-center justify-center">
+                  <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                 </div>
-              </motion.div>
+                <span>Watch Our Story</span>
+              </button>
             </div>
           </div>
-        </section>
-      </div>
 
-      <SectionDivider type="curve" />
+          {/* Right Hero Image with Script Annotation */}
+          <div className="lg:col-span-6 relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-xl bg-slate-100 aspect-4/3 sm:aspect-16/10">
+              <img
+                src={heroClassroomImg}
+                alt="Asian elementary students learning together with laptop and robotics kit"
+                className="w-full h-full object-cover object-center"
+                referrerPolicy="no-referrer"
+              />
+            </div>
 
-      {/* 3. User Needs Navigator: Modern, Concrete & Useful for All Stakeholders */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="max-w-2xl mb-8">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
-            Educational Pathways
+            {/* Handwritten Script Annotation "Learn Create Grow" */}
+            <div className="absolute top-2 right-4 sm:-top-2 sm:right-6 select-none pointer-events-none text-right">
+              <span className="font-script text-3xl sm:text-4xl text-slate-800 font-bold tracking-wide leading-tight block drop-shadow-xs rotate-2">
+                Learn <br />
+                Create <br />
+                Grow
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. OUR SOLUTIONS: OUR INTEGRATED SCHOOL SOLUTIONS */}
+      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-2">
+          <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+            Our Solutions
           </span>
-          <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-1">
-            How Can DIR Support You Today?
+          <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 tracking-tight">
+            Our Integrated School Solutions
           </h2>
-          <p className="text-slate-600 text-sm mt-1.5">
-            Select your role to quickly find relevant resources, curricula, and services tailored to your goals.
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto">
+            We bring together multiple education services under one platform to support the complete learning journey — from curriculum and digital learning to teacher development, resources and library solutions.
           </p>
         </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.1, delayChildren: 0.05 }
-            }
-          }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-        >
-          {/* Pathway 1: School Leaders */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
-            }}
-            className="p-6 rounded-xl bg-white border border-slate-200 hover:border-[#1E4592] hover:shadow-md transition-all flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#1E4592] flex items-center justify-center">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <h3 className="font-display font-bold text-base text-slate-900">
-                School Principals & Directors
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Adopt international curricula (Jolly Phonics, NatGeo, Binary Logic), arrange school-wide teacher training, and test Jolly Classroom software.
-              </p>
-              <ul className="text-xs text-slate-500 space-y-1.5 pt-1">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Curriculum adoption audits</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Free inspection sample sets</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={() => onNavigate('courseware')}
-              className="mt-5 w-full py-2.5 px-3 bg-blue-50 hover:bg-[#1E4592] text-[#1E4592] hover:text-white font-semibold text-xs rounded-xl transition-colors text-center cursor-pointer flex items-center justify-center gap-1.5"
+        {/* 6 Pastel Square Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {solutions.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => onNavigate(item.targetPage)}
+              className={`p-5 rounded-2xl border transition-all duration-200 cursor-pointer text-center flex flex-col items-center justify-between group shadow-2xs hover:shadow-md hover:-translate-y-1 ${item.bgClass}`}
             >
-              <span>Explore Curricula</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-
-          {/* Pathway 2: Teachers */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
-            }}
-            className="p-6 rounded-xl bg-white border border-slate-200 hover:border-[#1E4592] hover:shadow-md transition-all flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
-                <Users className="w-5 h-5" />
+              <div className="p-3 rounded-xl bg-white/90 shadow-2xs group-hover:scale-110 transition-transform">
+                <span className={item.iconClass}>{item.icon}</span>
               </div>
-              <h3 className="font-display font-bold text-base text-slate-900">
-                Teachers & Educators
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Access certified phonics articulation workshops, lesson pacing guides, teacher manuals, and interactive whiteboard digital tools.
-              </p>
-              <ul className="text-xs text-slate-500 space-y-1.5 pt-1">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>In-service masterclasses</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Teacher guides & flashcards</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={() => onNavigate('services')}
-              className="mt-5 w-full py-2.5 px-3 bg-purple-50 hover:bg-purple-700 text-purple-700 hover:text-white font-semibold text-xs rounded-xl transition-colors text-center cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              <span>Teacher Training</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
 
-          {/* Pathway 3: Parents & Students */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
-            }}
-            className="p-6 rounded-xl bg-white border border-slate-200 hover:border-[#1E4592] hover:shadow-md transition-all flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#F15A24] flex items-center justify-center">
-                <Bot className="w-5 h-5" />
+              <div className="my-3 space-y-1">
+                <h3 className="font-display font-bold text-sm text-slate-900 leading-snug">
+                  {item.title}
+                </h3>
+                <p className="text-[11px] text-slate-500 leading-tight">
+                  {item.subtext}
+                </p>
               </div>
-              <h3 className="font-display font-bold text-base text-slate-900">
-                Parents & Students
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Enroll in Saturday and Sunday hands-on STEM classes in Yangon. Mechanical robotics kits, Scratch coding, and Python computer science.
-              </p>
-              <ul className="text-xs text-slate-500 space-y-1.5 pt-1">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Ages 5–17 progressive levels</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>1-to-1 physical robotics kits</span>
-                </li>
-              </ul>
+
+              <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#1E4592] transition-colors mt-auto">
+                Explore →
+              </span>
             </div>
-            <button
-              onClick={() => onNavigate('digital-hub')}
-              className="mt-5 w-full py-2.5 px-3 bg-orange-50 hover:bg-[#F15A24] text-[#F15A24] hover:text-white font-semibold text-xs rounded-xl transition-colors text-center cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              <span>Weekend STEM Hub</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-
-          {/* Pathway 4: Retailers */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
-            }}
-            className="p-6 rounded-xl bg-white border border-slate-200 hover:border-[#1E4592] hover:shadow-md transition-all flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
-                <Store className="w-5 h-5" />
-              </div>
-              <h3 className="font-display font-bold text-base text-slate-900">
-                Bookstores & Retailers
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Wholesale distribution of bestselling children&apos;s fiction (Dav Pilkey), tactile math toys, and activity sets with direct Yangon fulfillment.
-              </p>
-              <ul className="text-xs text-slate-500 space-y-1.5 pt-1">
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Dav Pilkey official supply</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>Fast shipping across 50+ stores</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={() => onNavigate('bookstore')}
-              className="mt-5 w-full py-2.5 px-3 bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white font-semibold text-xs rounded-xl transition-colors text-center cursor-pointer flex items-center justify-center gap-1.5"
-            >
-              <span>Bookstore Catalog</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* 4. Three Core Business Units: Clean Editorial Deep Dive */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="border-t border-slate-200 pt-12 sm:pt-16">
-          <div className="max-w-2xl mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
-              Corporate Divisions
-            </span>
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-1">
-              Three Specialized Units Under DIR Group
-            </h2>
-            <p className="text-slate-600 text-sm mt-1.5">
-              Operating with unified standards across B2B curriculum publishing, national book logistics, and student STEM training.
-            </p>
-          </div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-40px' }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.12, delayChildren: 0.05 }
-              }
-            }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {COMPANY_INFO.businessUnits.map((unit) => {
-              return (
-                <motion.div
-                  key={unit.id}
-                  variants={{
-                    hidden: { opacity: 0, y: 24 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
-                  }}
-                  className="rounded-xl border border-slate-200 bg-white p-6 sm:p-7 flex flex-col justify-between hover:shadow-md transition-all group"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-900">
-                        {unit.shortName}
-                      </span>
-                      <span className="text-[11px] text-slate-500 font-mono">
-                        {unit.role.includes('B2B') ? 'B2B Institutional' : unit.role.includes('B2C') ? 'Wholesale & Retail' : 'Weekend Academy'}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display font-bold text-lg text-slate-900 group-hover:text-[#1E4592] transition-colors">
-                      {unit.tagline}
-                    </h3>
-
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {unit.description}
-                    </p>
-
-                    <div className="pt-3 border-t border-slate-100 text-xs text-slate-500">
-                      <strong className="text-slate-700 block mb-0.5">Primary Audience:</strong>
-                      <span>{unit.target}</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-700">
-                      {unit.metrics}
-                    </span>
-                    <button
-                      onClick={() => {
-                        if (unit.id === 'dir-courseware') onNavigate('courseware');
-                        else if (unit.id === 'u-book-store') onNavigate('bookstore');
-                        else onNavigate('digital-hub');
-                      }}
-                      className="text-xs font-bold text-[#1E4592] group-hover:text-[#F15A24] flex items-center gap-1 cursor-pointer transition-colors"
-                    >
-                      <span>Explore</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* 5. Parent Company Heritage: Myint Thuka Nadi Group (2005) - Light Dark Corporate Navy */}
+      {/* 3. WHY DIR? ONE PARTNER. MULTIPLE EDUCATION SOLUTIONS. */}
       <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="rounded-xl bg-gradient-to-br from-[#1E3A5F] via-[#1B355A] to-[#162D4A] text-white p-8 sm:p-12 border border-[#2B4B75] shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <div className="text-xs font-bold uppercase tracking-wider text-orange-400 flex items-center gap-2">
-                <Building2 className="w-4 h-4" />
-                <span>Parent Conglomerate Heritage · MTKN Group</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Description */}
+          <div className="lg:col-span-4 space-y-4">
+            <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+              Why DIR?
+            </span>
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight">
+              One Partner. Multiple <br />
+              Education Solutions.
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              We combine global quality and local expertise to deliver practical, sustainable and customized solutions for every educational institution.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onNavigate('about')}
+                className="px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold rounded-full border border-slate-300 transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              >
+                <span>Learn More About Us</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Middle 6 Key Features Grid (2 cols x 3 rows) */}
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {whyDirPoints.map((point, idx) => (
+              <div key={idx} className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-[#0284C7] flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                  {point.icon}
+                </div>
+                <div>
+                  <h4 className="font-display font-bold text-xs sm:text-sm text-slate-900">
+                    {point.title}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                    {point.desc}
+                  </p>
+                </div>
               </div>
-              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-white">
-                Backed by Myint Thuka Nadi Co., Ltd (MTKN Group)
-              </h2>
-              <p className="text-blue-100/90 text-sm sm:text-base leading-relaxed max-w-3xl">
-                Founded on April 28th, 2005, Myint Thuka Nadi Co., Ltd is one of Myanmar&apos;s most established trading and logistics groups. Operating across chemicals, food & beverage, animal health, and educational resources, MTKN provides DIR with resilient financial standing, nationwide logistics warehouses, and institutional governance across Myanmar and Southeast Asia.
-              </p>
-              <div className="flex flex-wrap items-center gap-3 pt-2 text-xs font-semibold text-slate-100">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15">
-                  <ShieldCheck className="w-4 h-4 text-emerald-300" />
-                  <span>21+ Years Experience</span>
+            ))}
+          </div>
+
+          {/* Right Campus Curved Photo with Script Annotation */}
+          <div className="lg:col-span-3 relative flex justify-center">
+            <div className="relative w-full max-w-[280px] lg:max-w-none rounded-t-[100px] rounded-b-2xl overflow-hidden shadow-lg border border-slate-200 aspect-3/4">
+              <img
+                src={campusImg}
+                alt="Modern educational campus building in sunny daylight"
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+
+            {/* Script Text "Better Education Brighter Future" */}
+            <div className="absolute -top-6 right-2 sm:right-6 select-none pointer-events-none text-right">
+              <span className="font-script text-2xl sm:text-3xl text-slate-800 font-bold tracking-wide leading-tight block rotate-3">
+                Better <br />
+                Education <br />
+                Brighter <br />
+                Future
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FOR EVERY STAKEHOLDER: CREATING VALUE ACROSS THE EDUCATION COMMUNITY */}
+      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
+        <div className="space-y-1">
+          <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+            For Every Stakeholder
+          </span>
+          <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+            Creating Value Across the Education Community
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left 5 Clean Cards */}
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            {stakeholders.map((sh, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all text-center flex flex-col items-center justify-between"
+              >
+                <div className="p-2.5 rounded-xl bg-slate-50 mb-2 text-[#1E4592]">
+                  {sh.icon}
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15">
-                  <Award className="w-4 h-4 text-blue-200" />
-                  <span>500+ Group Staff</span>
+                <h3 className="font-display font-bold text-xs sm:text-sm text-slate-900 mb-1">
+                  {sh.title}
+                </h3>
+                <p className="text-[11px] text-slate-500 leading-snug">
+                  {sh.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Library Reading Photo */}
+          <div className="lg:col-span-4 rounded-3xl overflow-hidden shadow-lg border border-slate-200 aspect-4/3 sm:aspect-16/10 lg:aspect-4/3">
+            <img
+              src={libraryReadingImg}
+              alt="Teacher and young students reading with a tablet in a bright library"
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 5. OUR BUSINESS UNITS: SEVEN BUSINESS UNITS. ONE EDUCATION ECOSYSTEM. */}
+      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Heading & Description */}
+          <div className="lg:col-span-4 space-y-4">
+            <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+              Our Business Units
+            </span>
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight">
+              Seven Business Units. <br />
+              One Education Ecosystem.
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              Each business unit brings specialized expertise, working together to give you a complete education solution — not just individual products.
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onNavigate('courseware')}
+                className="px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold rounded-full border border-slate-300 transition-colors inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+              >
+                <span>Explore Our Business Units</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Center 7 Business Units Cards (Grid) */}
+          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {businessUnits.map((bu) => (
+              <div
+                key={bu.id}
+                onClick={() => onNavigate(bu.targetPage)}
+                className={`p-3.5 rounded-2xl border transition-all text-center flex flex-col items-center justify-center cursor-pointer hover:shadow-sm hover:scale-[1.02] ${bu.bgClass}`}
+              >
+                <div className="mb-2 p-1.5 rounded-lg bg-white/80 shadow-2xs">
+                  {bu.icon}
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15">
-                  <span>Yangon Headquartered · 4+ Country Partnerships</span>
-                </div>
+                <span className="font-display font-bold text-xs leading-tight">
+                  {bu.name}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Circular Ecosystem Graphic */}
+          <div className="lg:col-span-3 p-6 rounded-3xl bg-slate-50/70 border border-slate-200/80 text-center flex flex-col items-center justify-center">
+            <div className="relative w-44 h-44 flex items-center justify-center">
+              {/* Outer Orbit Circle */}
+              <div className="absolute inset-2 rounded-full border-2 border-dashed border-[#0284C7]/30 animate-[spin_60s_linear_infinite]" />
+
+              {/* Orbiting Icons */}
+              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shadow-xs">
+                <Bot className="w-3.5 h-3.5" />
+              </div>
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-xs shadow-xs">
+                <Building2 className="w-3.5 h-3.5" />
+              </div>
+              <div className="absolute left-1 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs shadow-xs">
+                <BookOpen className="w-3.5 h-3.5" />
+              </div>
+              <div className="absolute right-1 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-xs shadow-xs">
+                <Store className="w-3.5 h-3.5" />
+              </div>
+              <div className="absolute top-6 right-6 w-6 h-6 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center text-xs shadow-xs">
+                <Landmark className="w-3 h-3" />
+              </div>
+              <div className="absolute bottom-6 left-6 w-6 h-6 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-xs shadow-xs">
+                <Sparkles className="w-3 h-3" />
+              </div>
+
+              {/* Center DiR Circle */}
+              <div className="w-20 h-20 rounded-full bg-white border-2 border-[#1E4592] shadow-sm flex flex-col items-center justify-center z-10">
+                <span className="font-display font-black text-xl text-[#1E4592]">DiR</span>
               </div>
             </div>
 
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col justify-start lg:justify-end gap-3">
+            <p className="font-display font-bold text-xs text-slate-700 mt-3">
+              Different strengths. A shared goal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. OUR REACH & PARTNERS */}
+      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Institutional Reach & Scale */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-1">
+              <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+                Our Reach
+              </span>
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+                Proven Scale. Trusted Excellence.
+              </h2>
+            </div>
+
+            {/* 4 Stats Grid */}
+            <div className="grid grid-cols-2 gap-6 pt-2">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0284C7] flex items-center justify-center shrink-0">
+                  <School className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
+                    500+
+                  </div>
+                  <div className="text-xs text-slate-500 font-medium mt-0.5">
+                    Schools Supported
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
+                    50,000+
+                  </div>
+                  <div className="text-xs text-slate-500 font-medium mt-0.5">
+                    Students Reached
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0">
+                  <UserCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
+                    2,000+
+                  </div>
+                  <div className="text-xs text-slate-500 font-medium mt-0.5">
+                    Teachers Trained
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0">
+                  <Award className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-display font-black text-2xl sm:text-3xl text-slate-900 tabular-nums">
+                    100+
+                  </div>
+                  <div className="text-xs text-slate-500 font-medium mt-0.5">
+                    Partner Organizations
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: OUR PARTNERS */}
+          <div className="lg:col-span-7 flex flex-col md:flex-row items-center gap-6">
+            <div className="space-y-4 flex-1">
+              <span className="text-xs font-bold tracking-wider uppercase text-[#1E4592] block">
+                Our Partners
+              </span>
+              <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+                Global Collaboration <br />
+                for Local Excellence
+              </h3>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                We work with trusted international publishers, technology providers and education organizations to bring the best resources and opportunities to Myanmar&apos;s learners.
+              </p>
+              <div>
+                <button
+                  onClick={() => onNavigate('partners')}
+                  className="px-6 py-2.5 bg-[#1E4592] hover:bg-[#153472] text-white text-xs font-semibold rounded-full shadow-xs transition-all inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <span>View Our Partners</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Globe & Books Photo with Script Annotation */}
+            <div className="relative w-full max-w-[280px] shrink-0">
+              <div className="rounded-3xl overflow-hidden shadow-lg border border-slate-200 aspect-square">
+                <img
+                  src={partnersGlobeImg}
+                  alt="Desktop globe, stack of academic books and graduation cap"
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              {/* Script Annotation */}
+              <div className="absolute top-4 right-2 sm:right-4 select-none pointer-events-none text-right">
+                <span className="font-script text-2xl sm:text-3xl text-slate-800 font-bold tracking-wide leading-tight block rotate-3">
+                  Global <br />
+                  Partnerships. <br />
+                  Local <br />
+                  Excellence.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. FULL-WIDTH CTA BANNER: LET'S BUILD A BRIGHTER FUTURE IN EDUCATION */}
+      <section className="bg-[#1E4592] text-white py-12 sm:py-16">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl text-center md:text-left">
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight">
+              Let&apos;s Build a Brighter Future in Education
+            </h2>
+            <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">
+              Together, we can create modern learning environments that empower students, teachers and communities.
+            </p>
+          </div>
+
+          <div className="shrink-0">
+            <button
+              onClick={() => onNavigate('contact')}
+              className="px-7 py-3 rounded-full border-2 border-white hover:bg-white hover:text-[#1E4592] text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer inline-flex items-center gap-2 shadow-xs"
+            >
+              <span>Get in Touch</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      {videoModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="font-display font-bold text-lg text-slate-900">
+                Our Story: Digital Information Resources (DIR)
+              </h3>
               <button
-                onClick={() => onNavigate('about')}
-                className="px-5 py-3 bg-white hover:bg-blue-50 text-[#1E3A5F] text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                onClick={() => setVideoModalOpen(false)}
+                className="p-1 rounded-full text-slate-400 hover:text-slate-600"
               >
-                <span>Read Group Background</span>
-                <ChevronRight className="w-4 h-4" />
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="rounded-2xl overflow-hidden bg-slate-900 aspect-16/9 flex items-center justify-center text-white relative">
+              <img
+                src={heroClassroomImg}
+                alt="DIR Video Story preview"
+                className="w-full h-full object-cover opacity-60"
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                <div className="w-14 h-14 rounded-full bg-[#1E4592] text-white flex items-center justify-center shadow-lg">
+                  <Play className="w-6 h-6 fill-current ml-1" />
+                </div>
+                <div className="space-y-1">
+                  <p className="font-display font-bold text-base text-white">
+                    Empowering Myanmar&apos;s Learners Since 2018
+                  </p>
+                  <p className="text-xs text-slate-200 max-w-md">
+                    Watch how DIR brings world-class curricula, teachers masterclasses, and hands-on robotics to schools across Myanmar.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end pt-2">
+              <button
+                onClick={() => setVideoModalOpen(false)}
+                className="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-full"
+              >
+                Close
               </button>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 6. Official Corporate Profile & Fact Sheet */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-xs space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#1E4592]">
-                Official Corporate Registry & Data Sheet
-              </span>
-              <h3 className="font-display font-bold text-2xl text-slate-900 mt-1">
-                Digital Information Resources Co., Ltd (DIR)
-              </h3>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-semibold px-3 py-1 bg-blue-50 text-[#1E4592] border border-blue-200 rounded-lg">
-                Member of MTKN Group (Est. 2005)
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Corporate Identity</div>
-              <div className="text-sm font-bold text-slate-900">Digital Information Resources Co., Ltd</div>
-              <div className="text-xs text-slate-600">Established in 2018 · Yangon, Myanmar</div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Headquarters Address</div>
-              <div className="text-xs font-semibold text-slate-900">No-408, Tower (B), Myaing Hay Wun Condo</div>
-              <div className="text-xs text-slate-600">8 Miles, Mayangone Township, Yangon</div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Direct Contact Hotlines</div>
-              <div className="text-xs font-mono font-bold text-slate-900">+95 186 510 49</div>
-              <div className="text-xs font-mono text-slate-700">+95 9 797 007 881</div>
-            </div>
-
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Official Channels</div>
-              <a href="mailto:cs@dir.com.mm" className="text-xs font-semibold text-[#1E4592] hover:underline block">
-                cs@dir.com.mm
-              </a>
-              <div className="text-xs text-slate-600">Mon – Fri: 9:00 AM – 5:00 PM</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Partner Network: Institutional Logos & Verification */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <PartnerLogoCarousel onNavigate={onNavigate} />
-      </section>
-
-      {/* 8. Testimonials Carousel */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <TestimonialCarousel
-          title="What Schools, Teachers & Students Say"
-          subtitle="Real outcomes from educators adopting Jolly Phonics, English language programs, and hands-on STEM robotics classes."
-        />
-      </section>
-
-      {/* 8. Bottom Action Banner: Clear Inspection Request & Contact */}
-      <section className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="bg-slate-50 rounded-xl p-8 sm:p-10 border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <h3 className="font-display font-bold text-2xl text-slate-900">
-              Request Inspection Copies or Plan Curriculum Review
-            </h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              We provide complimentary examination copies to school principals, academic coordinators, and department heads across Myanmar. Contact our Yangon office or request a sample directly.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <button
-              onClick={onOpenQuoteModal}
-              className="px-5 py-2.5 bg-[#F15A24] hover:bg-[#D44512] text-white font-semibold text-xs rounded-xl transition-colors cursor-pointer shadow-xs"
-            >
-              Request Inspection Copy
-            </button>
-            <button
-              onClick={() => onNavigate('contact')}
-              className="px-5 py-2.5 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
-            >
-              Contact Head Office
-            </button>
-          </div>
-        </div>
-      </section>
-    </motion.div>
+      )}
+    </div>
   );
 };
-

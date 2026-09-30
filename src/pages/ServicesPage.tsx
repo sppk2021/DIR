@@ -246,10 +246,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                  Infographic 02 · Service Lifecycle & Implementation
+                  Service Lifecycle & Implementation Framework
                 </span>
                 <h4 className="font-display font-bold text-xl text-slate-900 mt-0.5">
-                  How We Deliver This Service (Phase 01 to 04)
+                  How We Deliver This Service (Steps 01 to 04)
                 </h4>
               </div>
               <span className="text-xs font-mono text-slate-500">
@@ -272,7 +272,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     }`}
                   >
                     <span className="font-mono text-xs font-bold text-blue-600 block">
-                      Phase {step.step}
+                      Step {step.step}
                     </span>
                     <span className="font-display font-bold text-xs sm:text-sm text-slate-900 block mt-1 line-clamp-1">
                       {step.title}
