@@ -71,8 +71,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
   } = useSiteConfig();
 
   // Login form state
-  const [usernameInput, setUsernameInput] = useState('admin');
-  const [passwordInput, setPasswordInput] = useState('admin');
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
@@ -142,7 +142,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     }
   };
 
-  // File upload helper (for image files: logo, poster, photo)
+  // File upload helper (for image files: logo, poster, photo) with automatic canvas resizing for optimal performance & zero quota errors
   const handleImageFileUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
     onUploaded: (dataUrl: string) => void
@@ -158,11 +158,52 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = event.target?.result as string;
-      if (result) {
+      if (!result) return;
+
+      // If SVG or small enough, use directly; otherwise compress via canvas to avoid quota/payload limits
+      if (file.type === 'image/svg+xml' || file.size < 200 * 1024) {
         onUploaded(result);
         setHasUnsavedChanges(true);
         showToast(`Image "${file.name}" loaded successfully!`, 'success');
+        return;
       }
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_DIM = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height && width > MAX_DIM) {
+          height = Math.round((height * MAX_DIM) / width);
+          width = MAX_DIM;
+        } else if (height > MAX_DIM) {
+          width = Math.round((width * MAX_DIM) / height);
+          height = MAX_DIM;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          onUploaded(optimizedDataUrl);
+          setHasUnsavedChanges(true);
+          showToast(`Image "${file.name}" optimized & loaded successfully!`, 'success');
+        } else {
+          onUploaded(result);
+          setHasUnsavedChanges(true);
+          showToast(`Image "${file.name}" loaded successfully!`, 'success');
+        }
+      };
+      img.onerror = () => {
+        onUploaded(result);
+        setHasUnsavedChanges(true);
+        showToast(`Image "${file.name}" loaded successfully!`, 'success');
+      };
+      img.src = result;
     };
     reader.readAsDataURL(file);
     // Reset file input target value so the same file can be re-selected if needed
@@ -324,28 +365,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              {/* Default Credentials Helper */}
-              <div className="p-3 rounded-xl bg-linear-to-r from-blue-50 to-orange-50 border border-blue-100 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <p className="text-[11px] font-bold text-slate-700">
-                    Default Credentials:
-                  </p>
-                  <p className="text-[11px] font-mono text-slate-600">
-                    User: <strong className="text-[#1E4592]">admin</strong> / Pass:{' '}
-                    <strong className="text-[#F15A24]">admin</strong>
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUsernameInput('admin');
-                    setPasswordInput('admin');
-                  }}
-                  className="px-2.5 py-1 text-[11px] font-bold text-[#1E4592] hover:text-[#153472] bg-white rounded-lg shadow-2xs border border-blue-200 cursor-pointer transition-colors"
-                >
-                  Auto-fill
-                </button>
-              </div>
 
               {/* Login Button */}
               <button
