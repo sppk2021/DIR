@@ -703,45 +703,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                     </p>
                   </div>
 
-                  {/* Quick Select Presets */}
-                  <div className="space-y-2 pt-2">
-                    <label className="block text-xs font-bold text-slate-700">
-                      Quick-Select Logo Presets:
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {PRESET_LOGOS.slice(0, 8).map((preset) => {
-                        const isSelected = draftConfig.branding.headerLogoUrl === preset.url;
-                        return (
-                          <button
-                            key={preset.label}
-                            type="button"
-                            onClick={() => {
-                              setDraftConfig({
-                                ...draftConfig,
-                                branding: { ...draftConfig.branding, headerLogoUrl: preset.url }
-                              });
-                              setHasUnsavedChanges(true);
-                              showToast(`Switched logo to ${preset.label}`, 'info');
-                            }}
-                            className={`p-2 rounded-xl border text-left flex items-center gap-2 transition-all cursor-pointer ${
-                              isSelected
-                                ? 'border-[#1E4592] bg-blue-50/80 ring-2 ring-blue-500/20'
-                                : 'border-slate-200 bg-white hover:bg-slate-50'
-                            }`}
-                          >
-                            <img
-                              src={preset.url}
-                              alt={preset.label}
-                              className="w-7 h-7 object-contain rounded shrink-0 bg-slate-50"
-                            />
-                            <span className="text-[11px] font-semibold text-slate-800 truncate">
-                              {preset.label}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
+
 
                   {/* Brand Typography & Labels */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
@@ -1308,18 +1270,38 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                     {/* Middle: Logo URL & Website Link */}
                     <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-slate-500">Logo Image URL</label>
-                        <input
-                          type="text"
-                          value={partner.logoImage}
-                          onChange={(e) => {
-                            const updated = [...draftConfig.partners];
-                            updated[index] = { ...partner, logoImage: e.target.value };
-                            setDraftConfig({ ...draftConfig, partners: updated });
-                            setHasUnsavedChanges(true);
-                          }}
-                          className="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg font-mono text-[11px] focus:outline-none focus:border-[#1E4592]"
-                        />
+                        <label className="text-[10px] font-bold text-slate-500">Logo Image URL or Upload</label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={partner.logoImage}
+                            onChange={(e) => {
+                              const updated = [...draftConfig.partners];
+                              updated[index] = { ...partner, logoImage: e.target.value };
+                              setDraftConfig({ ...draftConfig, partners: updated });
+                              setHasUnsavedChanges(true);
+                            }}
+                            className="flex-1 px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg font-mono text-[11px] focus:outline-none focus:border-[#1E4592]"
+                          />
+                          <label className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] font-bold cursor-pointer transition-colors flex items-center gap-1 shrink-0">
+                            <Upload className="w-3 h-3" />
+                            <span>Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) =>
+                                handleImageFileUpload(e, (dataUrl) => {
+                                  const updated = [...draftConfig.partners];
+                                  updated[index] = { ...partner, logoImage: dataUrl };
+                                  setDraftConfig({ ...draftConfig, partners: updated });
+                                  setHasUnsavedChanges(true);
+                                  showToast(`Uploaded logo for ${partner.name}`, 'success');
+                                })
+                              }
+                            />
+                          </label>
+                        </div>
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold text-slate-500">Website Link</label>
