@@ -31,6 +31,8 @@ import campusImg from '../assets/images/modern_school_campus_1790752281948.jpg';
 import libraryReadingImg from '../assets/images/library_teacher_students_1790752299661.jpg';
 import partnersGlobeImg from '../assets/images/partners_globe_books_1790752316364.jpg';
 import { PartnerCoverSlider } from '../components/PartnerCoverSlider';
+import { VideoPlayerModal } from '../components/VideoPlayerModal';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface HomePageProps {
   onNavigate: (page: PageId) => void;
@@ -44,6 +46,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onOpenQuoteModal
 }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const { config } = useSiteConfig();
 
   // 6 Solutions
   const solutions = [
@@ -227,32 +230,31 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Left Text */}
           <div className="lg:col-span-6 space-y-6">
             <span className="text-xs font-bold tracking-wider uppercase text-[#0284C7] block">
-              Integrated Education Solutions
+              {config.hero.badgeText || 'Integrated Education Solutions'}
             </span>
 
             <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-[54px] text-slate-900 tracking-tight leading-[1.12]">
-              Building Future-Ready <br className="hidden sm:block" />
-              Learners, Together
+              {config.hero.headline || 'Building Future-Ready Learners, Together'}
             </h1>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-              DIR provides integrated education solutions for schools, educators, students, libraries and education organizations through curriculum, technology, learning resources, teacher development and more.
+              {config.hero.subheadline || 'DIR provides integrated education solutions for schools, educators, students, libraries and education organizations through curriculum, technology, learning resources, teacher development and more.'}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
-                onClick={() => onNavigate('courseware')}
+                onClick={() => onNavigate((config.hero.primaryCtaTarget as PageId) || 'courseware')}
                 className="px-6 py-3 bg-[#1E4592] hover:bg-[#153472] text-white text-xs sm:text-sm font-semibold rounded-full shadow-xs hover:shadow transition-all flex items-center gap-2 cursor-pointer"
               >
-                <span>Explore Our Solutions</span>
+                <span>{config.hero.primaryCtaText || 'Explore Our Solutions'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => onNavigate('about')}
+                onClick={() => onNavigate((config.hero.secondaryCtaTarget as PageId) || 'about')}
                 className="px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-semibold rounded-full border border-slate-300 transition-colors cursor-pointer"
               >
-                About DIR
+                {config.hero.secondaryCtaText || 'About DIR'}
               </button>
 
               <button
@@ -262,7 +264,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div className="w-7 h-7 rounded-full bg-blue-50 text-[#1E4592] flex items-center justify-center">
                   <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                 </div>
-                <span>Watch Our Story</span>
+                <span>{config.hero.videoButtonText || 'Watch Our Story'}</span>
               </button>
             </div>
           </div>
@@ -271,7 +273,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-xl bg-slate-100 aspect-4/3 sm:aspect-16/10">
               <img
-                src={heroClassroomImg}
+                src={config.hero.heroImageUrl || heroClassroomImg}
                 alt="Asian elementary students learning together with laptop and robotics kit"
                 className="w-full h-full object-cover object-center"
                 referrerPolicy="no-referrer"
@@ -634,52 +636,16 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* Video Modal */}
-      {videoModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="font-display font-bold text-lg text-slate-900">
-                Our Story: Digital Information Resources (DIR)
-              </h3>
-              <button
-                onClick={() => setVideoModalOpen(false)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="rounded-2xl overflow-hidden bg-slate-900 aspect-16/9 flex items-center justify-center text-white relative">
-              <img
-                src={heroClassroomImg}
-                alt="DIR Video Story preview"
-                className="w-full h-full object-cover opacity-60"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4 text-center">
-                <div className="w-14 h-14 rounded-full bg-[#1E4592] text-white flex items-center justify-center shadow-lg">
-                  <Play className="w-6 h-6 fill-current ml-1" />
-                </div>
-                <div className="space-y-1">
-                  <p className="font-display font-bold text-base text-white">
-                    Empowering Myanmar&apos;s Learners Since 2018
-                  </p>
-                  <p className="text-xs text-slate-200 max-w-md">
-                    Watch how DIR brings world-class curricula, teachers masterclasses, and hands-on robotics to schools across Myanmar.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-end pt-2">
-              <button
-                onClick={() => setVideoModalOpen(false)}
-                className="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-full"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Video Modal with dynamic YouTube / Vimeo / MP4 streaming support */}
+      <VideoPlayerModal
+        isOpen={videoModalOpen}
+        onClose={() => setVideoModalOpen(false)}
+        videoUrl={config.hero.videoUrl}
+        title={config.hero.videoTitle}
+        subtitle={config.hero.videoSubtitle}
+        description={config.hero.videoDescription}
+        posterUrl={config.hero.videoPosterUrl || heroClassroomImg}
+      />
     </div>
   );
 };

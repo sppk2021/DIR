@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/dirData';
 import { PageId } from '../types';
+import { SocialMediaBar3D } from '../components/SocialIcon3D';
 import { motion, useScroll, useTransform } from 'motion/react';
 import {
   MapPin,
@@ -181,6 +182,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     STEM Hub
                   </button>
                 </div>
+              </div>
+
+              {/* 3D Social Media Channels */}
+              <div className="pt-4 border-t border-slate-100 space-y-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                  Official Social Channels
+                </span>
+                <SocialMediaBar3D size="md" />
               </div>
             </div>
           </div>

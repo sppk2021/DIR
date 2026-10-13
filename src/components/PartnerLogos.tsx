@@ -1,5 +1,6 @@
 import React from 'react';
 import { MasterPartnerLogo } from './OfficialLogos';
+import { getPartnerLogo } from '../data/partnerAssets';
 
 interface PartnerBadgeProps {
   id?: string;
@@ -10,6 +11,7 @@ interface PartnerBadgeProps {
   collaboration?: string;
   programsAdopted?: string[];
   foundedOrScale?: string;
+  logoUrl?: string;
   size?: 'sm' | 'md' | 'lg';
   onClick?: () => void;
 }
@@ -23,44 +25,75 @@ export const PartnerBadge: React.FC<PartnerBadgeProps> = ({
   collaboration,
   programsAdopted,
   foundedOrScale,
+  logoUrl,
   size = 'md',
   onClick
 }) => {
   const isSchool = category === 'school';
+  const logoDimensions = size === 'lg' ? 64 : size === 'sm' ? 44 : 52;
+  // Resolve logo dynamically from centralized library or prop
+  const resolvedLogoUrl = logoUrl || (id ? getPartnerLogo(id) : undefined);
 
   return (
     <div
       onClick={onClick}
-      className={`flex flex-col justify-between p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-[#1E4592]/50 hover:shadow-md transition-all group ${
+      className={`flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-[#1E4592]/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group ${
         onClick ? 'cursor-pointer' : ''
       }`}
     >
-      <div className="flex items-start gap-3.5">
-        {/* Official Vector Logo */}
-        <div className="shrink-0 group-hover:scale-105 transition-transform">
-          <MasterPartnerLogo
-            partnerId={id}
-            category={category}
-            size={size === 'lg' ? 56 : size === 'sm' ? 40 : 48}
-          />
+      <div>
+        {/* Top Prominent Logo Banner Container */}
+        <div className="w-full h-24 sm:h-28 rounded-xl bg-slate-50/80 border border-slate-100 flex items-center justify-center p-3 sm:p-4 mb-3.5 group-hover:bg-slate-50 group-hover:border-slate-200/80 transition-all overflow-hidden relative">
+          {resolvedLogoUrl ? (
+            <img
+              src={resolvedLogoUrl}
+              alt={`${name} Official Logo`}
+              className="max-h-full max-w-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 select-none"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                if (target.src !== '/assets/DIR-LOGO-Confirm.jpg') {
+                  target.src = '/assets/DIR-LOGO-Confirm.jpg';
+                }
+              }}
+            />
+          ) : (
+            <div className="group-hover:scale-105 transition-transform">
+              <MasterPartnerLogo
+                partnerId={id}
+                category={category}
+                size={logoDimensions}
+              />
+            </div>
+          )}
+
+          {/* Category Micro-Badge Overlay at Top Right of Logo Container */}
+          <span
+            className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border shadow-2xs ${
+              isSchool
+                ? 'bg-blue-50 text-[#1E4592] border-blue-200'
+                : 'bg-orange-50 text-[#F15A24] border-orange-200'
+            }`}
+          >
+            {isSchool ? 'School' : 'Retailer'}
+          </span>
         </div>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-            <span className={isSchool ? 'text-[#1E4592]' : 'text-[#F15A24]'}>
-              {isSchool ? 'School' : 'Retailer'}
-            </span>
+        {/* Institutional Title & Location */}
+        <div>
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-500">
             {city && (
+              <span className="text-slate-600 font-medium">📍 {city}</span>
+            )}
+            {type && (
               <>
                 <span>·</span>
-                <span>{city}</span>
+                <span className="truncate">{type}</span>
               </>
             )}
           </div>
-          <h4 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-[#1E4592] transition-colors mt-0.5">
+          <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-[#1E4592] transition-colors mt-1">
             {name}
           </h4>
-          {type && <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{type}</p>}
         </div>
       </div>
 

@@ -5,6 +5,7 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showText?: boolean;
   textColor?: 'dark' | 'white';
+  logoSrc?: string;
 }
 
 /**
@@ -61,9 +62,34 @@ export const DIRLogo: React.FC<LogoProps> = ({
   className = '',
   size = 'md',
   showText = true,
-  textColor = 'dark'
+  textColor = 'dark',
+  logoSrc
 }) => {
   const isWhite = textColor === 'white';
+  const targetLogoSrc = logoSrc || '/assets/DIR-LOGO-Confirm.jpg';
+
+  const imgHeight =
+    size === 'sm' ? 36 : size === 'lg' ? 50 : size === 'xl' ? 62 : 42;
+
+  // On light backgrounds, display the confirmed official image asset directly
+  if (!isWhite) {
+    return (
+      <div className={`flex items-center select-none ${className}`}>
+        <img
+          src={targetLogoSrc}
+          alt="Digital Information Resources Co., Ltd."
+          style={{ height: `${imgHeight}px` }}
+          className="w-auto object-contain shrink-0 max-w-full"
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src !== '/assets/dir-logo.svg') {
+              target.src = '/assets/dir-logo.svg';
+            }
+          }}
+        />
+      </div>
+    );
+  }
 
   const emblemSize =
     size === 'sm' ? 30 : size === 'lg' ? 44 : size === 'xl' ? 52 : 36;
@@ -84,9 +110,7 @@ export const DIRLogo: React.FC<LogoProps> = ({
       {/* Wordmark "DiR" */}
       <div className="flex items-center">
         <span
-          className={`font-display font-black tracking-tight leading-none ${titleClass} ${
-            isWhite ? 'text-white' : 'text-[#1E4592]'
-          }`}
+          className={`font-display font-black tracking-tight leading-none ${titleClass} text-white`}
         >
           D<span className="text-[#F15A24]">i</span>R
         </span>
@@ -94,23 +118,11 @@ export const DIRLogo: React.FC<LogoProps> = ({
 
       {/* Subtitle stacked */}
       {showText && (
-        <div
-          className={`flex flex-col text-left leading-tight pl-2.5 border-l ${
-            isWhite ? 'border-white/20' : 'border-slate-300'
-          }`}
-        >
-          <span
-            className={`font-display font-bold text-[11px] tracking-tight uppercase ${
-              isWhite ? 'text-slate-100' : 'text-slate-900'
-            }`}
-          >
+        <div className="flex flex-col text-left leading-tight pl-2.5 border-l border-white/20">
+          <span className="font-display font-bold text-[11px] tracking-tight uppercase text-slate-100">
             Digital Information
           </span>
-          <span
-            className={`text-[9.5px] font-semibold tracking-wide ${
-              isWhite ? 'text-slate-400' : 'text-slate-500'
-            }`}
-          >
+          <span className="text-[9.5px] font-semibold tracking-wide text-slate-400">
             Resources Co., Ltd.
           </span>
         </div>
@@ -118,3 +130,30 @@ export const DIRLogo: React.FC<LogoProps> = ({
     </div>
   );
 };
+
+/**
+ * Confirmed Official DIR Logo rendered directly from the confirmed image asset:
+ * /assets/DIR-LOGO-Confirm.jpg (with SVG vector fallback)
+ */
+export const DIRImageLogo: React.FC<{
+  className?: string;
+  height?: number | string;
+  alt?: string;
+}> = ({
+  className = '',
+  height = 42,
+  alt = 'Digital Information Resources Co., Ltd.'
+}) => (
+  <img
+    src="/assets/DIR-LOGO-Confirm.jpg"
+    alt={alt}
+    style={{ height }}
+    className={`w-auto object-contain select-none ${className}`}
+    onError={(e) => {
+      (e.currentTarget as HTMLImageElement).src = '/assets/dir-logo.svg';
+    }}
+  />
+);
+
+export const DIR_CONFIRMED_LOGO_PATH = '/assets/DIR-LOGO-Confirm.jpg';
+export const DIR_CONFIRMED_SVG_PATH = '/assets/dir-logo.svg';

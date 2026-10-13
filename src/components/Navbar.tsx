@@ -18,9 +18,12 @@ import {
   ArrowRight,
   PhoneCall,
   Mail,
-  CheckCircle2
+  CheckCircle2,
+  ShieldCheck,
+  Lock
 } from 'lucide-react';
 import { DIRLogo } from './DIRLogo';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface NavbarProps {
   currentPage: PageId;
@@ -44,6 +47,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const solutionsRef = useRef<HTMLDivElement>(null);
   const unitsRef = useRef<HTMLDivElement>(null);
+
+  const { config } = useSiteConfig();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -194,6 +199,26 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
+      {/* Dynamic Announcement Banner if enabled */}
+      {config.announcement.enabled && (
+        <aside aria-label="Announcement" className="bg-[#1E4592] text-white py-1.5 px-4 text-center text-xs font-medium border-b border-blue-900/40">
+          <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/20 text-white tracking-wide uppercase">
+              {config.announcement.badge}
+            </span>
+            <span>{config.announcement.text}</span>
+            {config.announcement.linkUrl && (
+              <a
+                href={config.announcement.linkUrl}
+                className="underline underline-offset-2 hover:text-orange-300 font-semibold text-[11px]"
+              >
+                Learn More →
+              </a>
+            )}
+          </div>
+        </aside>
+      )}
+
       <header
         className={`sticky top-0 z-40 transition-all duration-200 border-b bg-white ${
           scrolled ? 'shadow-xs border-slate-200/90 py-2.5' : 'border-slate-200 py-3.5'
@@ -207,7 +232,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="focus:outline-none text-left cursor-pointer select-none"
               aria-label="DIR Home"
             >
-              <DIRLogo size="sm" showText={true} />
+              <DIRLogo
+                size="sm"
+                showText={config.branding.showSubtitleInHeader}
+                logoSrc={config.branding.headerLogoUrl}
+              />
             </button>
 
             {/* 2. DESKTOP NAVIGATION LINKS (No Impact, No Resources) */}
@@ -380,6 +409,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               )}
 
+              {/* Admin Portal Shortcut */}
+              <button
+                onClick={() => handleNavClick('admin')}
+                className="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:text-[#1E4592] hover:bg-blue-50 transition-colors cursor-pointer"
+                title="Admin Portal (/admin)"
+                aria-label="Admin Portal"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#1E4592]" />
+              </button>
+
               {/* Primary CTA: "Get in Touch" (Exact match to uploaded design!) */}
               <button
                 onClick={() => handleNavClick('contact')}
@@ -438,7 +477,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-200">
             {/* Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-              <DIRLogo size="sm" showText={true} />
+              <DIRLogo
+                size="sm"
+                showText={config.branding.showSubtitleInHeader}
+                logoSrc={config.branding.headerLogoUrl}
+              />
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-100 cursor-pointer"
@@ -534,6 +577,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                 >
                   Contact Us
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('admin')}
+                  className={`w-full text-left px-3 py-2.5 rounded-xl font-semibold transition-colors cursor-pointer flex items-center justify-between ${
+                    currentPage === 'admin'
+                      ? 'bg-blue-50 text-[#1E4592]'
+                      : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#1E4592]" />
+                    <span>Admin Portal</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400 font-mono">admin/admin</span>
                 </button>
               </div>
             </div>

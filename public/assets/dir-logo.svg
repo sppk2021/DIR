@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" width="540" height="120" fill="none">
+  <!-- Official DIR Emblem -->
+  <g id="dir-emblem">
+    <!-- Top Pixels -->
+    <rect x="18" y="14" width="12" height="12" rx="2" fill="#1E4592" />
+    <rect x="34" y="14" width="12" height="12" rx="2" fill="#F15A24" />
+
+    <!-- Orange Vertical Stem -->
+    <rect x="34" y="30" width="16" height="50" rx="2.5" fill="#F15A24" />
+
+    <!-- Royal Blue "R" Upper Loop -->
+    <path
+      d="M 50 30 H 74 C 90 30 102 40 102 54 C 102 67 90 76 74 76 H 50 V 62 H 71 C 79 62 85 58 85 53.5 C 85 48.5 79 44 71 44 H 50 V 30 Z"
+      fill="#1E4592"
+    />
+
+    <!-- Orange Dynamic Upper Wave -->
+    <path
+      d="M 16 66 C 28 59 42 55 58 55 C 68 55 78 59 86 56 C 83 63 74 70 58 70 C 42 70 28 76 15 79 C 14 75 14 70 16 66 Z"
+      fill="#F15A24"
+    />
+
+    <!-- Royal Blue Dynamic Lower Wave & "R" Leg -->
+    <path
+      d="M 14 79 C 28 70 46 69 61 74 C 71 78 79 86 85 96 L 98 116 H 78 L 70 99 C 65 89 56 85 46 85 C 33 85 23 90 12 94 C 11 89 12 84 14 79 Z"
+      fill="#1E4592"
+    />
+  </g>
+
+  <!-- Wordmark "DiR" -->
+  <g id="dir-wordmark">
+    <!-- Letter "D" -->
+    <path
+      d="M 124 34 H 144 C 158 34 168 44 168 58 C 168 72 158 82 144 82 H 124 V 34 Z M 136 45 V 71 H 143 C 151 71 156 65 156 58 C 156 51 151 45 143 45 H 136 Z"
+      fill="#1E4592"
+    />
+
+    <!-- Letter "i" (Orange with square dot) -->
+    <!-- Dot (tittle) -->
+    <rect x="175" y="34" width="9" height="9" rx="1.5" fill="#F15A24" />
+    <!-- Stem -->
+    <rect x="175" y="48" width="9" height="34" rx="1.5" fill="#F15A24" />
+
+    <!-- Letter "R" -->
+    <path
+      d="M 194 34 H 213 C 224 34 231 41 231 50 C 231 57 226 62 219 64 L 232 82 H 218 L 207 66 H 205 V 82 H 194 V 34 Z M 205 44 V 57 H 212 C 216 57 219 54 219 50.5 C 219 47 216 44 212 44 H 205 Z"
+      fill="#1E4592"
+    />
+  </g>
+
+  <!-- Vertical Divider Line -->
+  <line x1="250" y1="34" x2="250" y2="82" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" />
+
+  <!-- Full Company Name Typography -->
+  <g id="dir-company-name">
+    <!-- Top Line: Digital Information -->
+    <text
+      x="264"
+      y="55"
+      font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+      font-weight="800"
+      font-size="20"
+      letter-spacing="-0.3"
+      fill="#1E4592"
+    >Digital Information</text>
+
+    <!-- Bottom Line: Resources Co., Ltd. -->
+    <text
+      x="264"
+      y="77"
+      font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+      font-weight="600"
+      font-size="14"
+      letter-spacing="0.2"
+      fill="#475569"
+    >Resources Co., Ltd.</text>
+  </g>
+</svg>

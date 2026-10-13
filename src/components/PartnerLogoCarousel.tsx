@@ -84,8 +84,16 @@ export const PartnerLogoCarousel: React.FC<PartnerLogoCarouselProps> = ({
               onClick={() => setSelectedPartner(partner)}
               className="group flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-slate-200/90 hover:border-[#0EA5E9] shadow-2xs hover:shadow-lg transition-all duration-300 cursor-pointer shrink-0 grayscale hover:grayscale-0 hover:scale-105"
             >
-              <div className="w-9 h-9 flex items-center justify-center shrink-0">
-                <MasterPartnerLogo partnerId={partner.id} category={partner.category} size={32} />
+              <div className="w-9 h-9 flex items-center justify-center shrink-0 overflow-hidden rounded-lg bg-white">
+                {partner.logoUrl ? (
+                  <img
+                    src={partner.logoUrl}
+                    alt={partner.name}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <MasterPartnerLogo partnerId={partner.id} category={partner.category} size={32} />
+                )}
               </div>
               <div className="text-left">
                 <span className="font-display font-bold text-xs text-slate-800 group-hover:text-[#1E4592] transition-colors block max-w-[160px] truncate">
@@ -106,8 +114,16 @@ export const PartnerLogoCarousel: React.FC<PartnerLogoCarouselProps> = ({
           <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col">
             <div className="p-6 bg-[#1E3A5F] text-white flex items-start justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-white p-2.5 shadow-lg flex items-center justify-center shrink-0">
-                  <MasterPartnerLogo partnerId={selectedPartner.id} category={selectedPartner.category} size={42} />
+                <div className="w-14 h-14 rounded-2xl bg-white p-2 shadow-lg flex items-center justify-center shrink-0 overflow-hidden">
+                  {selectedPartner.logoUrl ? (
+                    <img
+                      src={selectedPartner.logoUrl}
+                      alt={selectedPartner.name}
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <MasterPartnerLogo partnerId={selectedPartner.id} category={selectedPartner.category} size={42} />
+                  )}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">

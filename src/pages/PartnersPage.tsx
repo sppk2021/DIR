@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SCHOOL_PARTNERS, RETAIL_PARTNERS } from '../data/dirData';
 import { PageId } from '../types';
 import { PartnerBadge } from '../components/PartnerLogos';
+import { PARTNER_ASSET_LIBRARY, getPartnerLogo } from '../data/partnerAssets';
 import { motion, useScroll, useTransform } from 'motion/react';
 import {
   Handshake,
@@ -142,6 +143,7 @@ export const PartnersPage: React.FC<PartnersPageProps> = ({ onNavigate, onOpenQu
               collaboration={partner.collaboration}
               programsAdopted={partner.programsAdopted}
               foundedOrScale={partner.foundedOrScale}
+              logoUrl={partner.logoUrl || getPartnerLogo(partner.id)}
             />
           ))}
         </div>

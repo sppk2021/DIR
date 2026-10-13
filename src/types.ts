@@ -11,7 +11,8 @@ export type PageId =
   | 'impact'
   | 'infographics'
   | 'resources'
-  | 'contact';
+  | 'contact'
+  | 'admin';
 
 export interface CurriculumItem {
   id: string;
@@ -68,6 +69,7 @@ export interface Partner {
   logoBg?: string;
   logoAccent?: string;
   logoText?: string;
+  logoUrl?: string;
 }
 
 export interface QuoteItem {
