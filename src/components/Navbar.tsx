@@ -233,7 +233,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-label="DIR Home"
             >
               <DIRLogo
-                size="sm"
+                size="md"
                 showText={config.branding.showSubtitleInHeader}
                 logoSrc={config.branding.headerLogoUrl}
               />
@@ -478,7 +478,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <DIRLogo
-                size="sm"
+                size="md"
                 showText={config.branding.showSubtitleInHeader}
                 logoSrc={config.branding.headerLogoUrl}
               />
