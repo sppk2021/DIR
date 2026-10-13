@@ -53,10 +53,10 @@ export const DIREmblem: React.FC<{ className?: string; size?: number }> = ({
 );
 
 /**
- * Official DiR Logo matching the uploaded design:
- * - Brand emblem in royal blue & orange
- * - Distinctive "DiR" wordmark with capital D, orange dot on 'i', and capital R
- * - Stacked "Digital Information Resources Co., Ltd." with clean divider
+ * Official DIR Logo:
+ * - Square rounded logo container with emblem or uploaded image
+ * - Beside logo: "Digital Information Resources Co., Ltd." in a single line with all same fonts
+ * - Responsive across mobile, web, desktops, and computers
  */
 export const DIRLogo: React.FC<LogoProps> = ({
   className = '',
@@ -66,64 +66,61 @@ export const DIRLogo: React.FC<LogoProps> = ({
   logoSrc
 }) => {
   const isWhite = textColor === 'white';
-  const targetLogoSrc = logoSrc || '/assets/DIR-LOGO-Confirm.jpg';
+  const targetLogoSrc = logoSrc || '';
 
-  const imgHeight =
-    size === 'sm' ? 36 : size === 'lg' ? 50 : size === 'xl' ? 62 : 42;
-
-  // On light backgrounds, display the confirmed official image asset directly
-  if (!isWhite) {
-    return (
-      <div className={`flex items-center select-none ${className}`}>
-        <img
-          src={targetLogoSrc}
-          alt="Digital Information Resources Co., Ltd."
-          style={{ height: `${imgHeight}px` }}
-          className="w-auto object-contain shrink-0 max-w-full"
-          onError={(e) => {
-            const target = e.currentTarget as HTMLImageElement;
-            if (target.src !== '/assets/dir-logo.svg') {
-              target.src = '/assets/dir-logo.svg';
-            }
-          }}
-        />
-      </div>
-    );
-  }
+  const boxSize =
+    size === 'sm'
+      ? 'w-9 h-9'
+      : size === 'lg'
+      ? 'w-12 h-12'
+      : size === 'xl'
+      ? 'w-14 h-14'
+      : 'w-10 h-10';
 
   const emblemSize =
-    size === 'sm' ? 30 : size === 'lg' ? 44 : size === 'xl' ? 52 : 36;
-  const titleClass =
+    size === 'sm' ? 24 : size === 'lg' ? 34 : size === 'xl' ? 40 : 28;
+
+  const textSize =
     size === 'sm'
-      ? 'text-xl'
+      ? 'text-xs sm:text-sm'
       : size === 'lg'
-      ? 'text-3xl'
+      ? 'text-base sm:text-lg'
       : size === 'xl'
-      ? 'text-4xl'
-      : 'text-2xl sm:text-[25px]';
+      ? 'text-lg sm:text-xl'
+      : 'text-sm sm:text-base';
+
+  const textColorClass = isWhite ? 'text-white' : 'text-slate-900';
 
   return (
     <div className={`flex items-center gap-2.5 sm:gap-3 select-none ${className}`}>
-      {/* Official Emblem */}
-      <DIREmblem size={emblemSize} />
-
-      {/* Wordmark "DiR" */}
-      <div className="flex items-center">
-        <span
-          className={`font-display font-black tracking-tight leading-none ${titleClass} text-white`}
-        >
-          D<span className="text-[#F15A24]">i</span>R
-        </span>
+      {/* Square Rounded Logo Container */}
+      <div
+        className={`${boxSize} rounded-xl overflow-hidden bg-white shadow-xs border ${
+          isWhite ? 'border-white/25 bg-white/10 backdrop-blur-xs' : 'border-slate-200/80'
+        } flex items-center justify-center shrink-0 p-1`}
+      >
+        {targetLogoSrc ? (
+          <img
+            src={targetLogoSrc}
+            alt="Digital Information Resources Co., Ltd."
+            className="w-full h-full object-contain rounded-lg"
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        ) : (
+          <DIREmblem size={emblemSize} />
+        )}
       </div>
 
-      {/* Subtitle stacked */}
+      {/* Company Name on One Single Line with All Same Fonts */}
       {showText && (
-        <div className="flex flex-col text-left leading-tight pl-2.5 border-l border-white/20">
-          <span className="font-display font-bold text-[11px] tracking-tight uppercase text-slate-100">
-            Digital Information
-          </span>
-          <span className="text-[9.5px] font-semibold tracking-wide text-slate-400">
-            Resources Co., Ltd.
+        <div className="flex items-center">
+          <span
+            className={`font-display font-bold tracking-tight ${textSize} ${textColorClass} whitespace-nowrap`}
+          >
+            Digital Information Resources Co., Ltd.
           </span>
         </div>
       )}
@@ -131,10 +128,6 @@ export const DIRLogo: React.FC<LogoProps> = ({
   );
 };
 
-/**
- * Confirmed Official DIR Logo rendered directly from the confirmed image asset:
- * /assets/DIR-LOGO-Confirm.jpg (with SVG vector fallback)
- */
 export const DIRImageLogo: React.FC<{
   className?: string;
   height?: number | string;
@@ -144,15 +137,24 @@ export const DIRImageLogo: React.FC<{
   height = 42,
   alt = 'Digital Information Resources Co., Ltd.'
 }) => (
-  <img
-    src="/assets/DIR-LOGO-Confirm.jpg"
-    alt={alt}
-    style={{ height }}
-    className={`w-auto object-contain select-none ${className}`}
-    onError={(e) => {
-      (e.currentTarget as HTMLImageElement).src = '/assets/dir-logo.svg';
-    }}
-  />
+  <div className="flex items-center gap-3 select-none">
+    <div
+      style={{ width: height, height }}
+      className="rounded-xl overflow-hidden bg-white shadow-xs border border-slate-200/80 flex items-center justify-center shrink-0 p-1"
+    >
+      <img
+        src="/assets/DIR-LOGO-Confirm.jpg"
+        alt={alt}
+        className="w-full h-full object-contain rounded-lg"
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).src = '/assets/dir-logo.svg';
+        }}
+      />
+    </div>
+    <span className="font-display font-bold text-base sm:text-lg text-slate-900 tracking-tight whitespace-nowrap">
+      Digital Information Resources Co., Ltd.
+    </span>
+  </div>
 );
 
 export const DIR_CONFIRMED_LOGO_PATH = '/assets/DIR-LOGO-Confirm.jpg';
